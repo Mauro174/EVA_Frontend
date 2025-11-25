@@ -22,9 +22,15 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+  {
+    "glob": "**/*",
+    "input": "src/assets",
+    "output": "assets"
+  }
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ]
           },
@@ -79,7 +85,12 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+  {
+    "glob": "**/*",
+    "input": "src/assets",
+    "output": "assets"
+  }
             ],
             "styles": [
               "src/styles.css"
