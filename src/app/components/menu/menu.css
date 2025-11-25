@@ -1,0 +1,133 @@
+/* === TOOLBAR ESTILO EVA (GLASS, STICKY, LIMPIO) === */
+.custom-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 24px;
+  box-sizing: border-box;
+
+  /* Fondo tipo header EVA */
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* Deja que el primer botón quede a la izquierda y el resto se vaya a la derecha si quieres */
+.custom-toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+/* === BOTÓN PRINCIPAL DEL MENÚ (MORADO EVA, PASTILLA) === */
+.btn-rojo {
+  background: #6a5ac9;              /* morado EVA */
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;              /* estilo pill */
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 4px 0;
+  padding: 8px 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  box-shadow: 0 8px 18px rgba(106, 90, 201, 0.35);
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.16s ease;
+}
+
+.btn-rojo:hover {
+  background-color: #5a48ce;
+  box-shadow: 0 12px 26px rgba(90, 72, 206, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-rojo:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(90, 72, 206, 0.35);
+}
+
+/* Icono dentro del botón */
+.btn-rojo mat-icon,
+.btn-rojo .material-symbols-outlined {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+/* Asegura alineación del texto */
+.btn-rojo span:not(.material-symbols-outlined),
+.btn-rojo {
+  vertical-align: middle;
+}
+
+/* Iconos y texto de la toolbar en blanco/morado */
+.custom-toolbar button,
+.custom-toolbar mat-icon {
+  color: #ffffff;
+}
+
+/* Si tienes otros botones de icono sueltos dentro del toolbar, que usen el mismo estilo base */
+.custom-toolbar button[mat-icon-button] {
+  color: #6a5ac9;
+  background-color: #ffffff;
+  border-radius: 999px;
+  margin-left: 4px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+  transition:
+    background-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.16s ease;
+}
+
+.custom-toolbar button[mat-icon-button]:hover {
+  background-color: #f4f0ff;
+  transform: translateY(-1px);
+}
+
+/* === MENÚ DESPLEGABLE ESTILO GLASS EVA === */
+.mat-mdc-menu-panel {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 12px !important;
+  border: 1px solid rgba(106, 90, 201, 0.22);
+  padding: 4px 0;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.18);
+}
+
+/* Items del menú */
+.mat-mdc-menu-item {
+  color: #111827 !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.mat-mdc-menu-item mat-icon {
+  color: #6a5ac9 !important;
+}
+
+/* Hover de ítems del menú */
+.mat-mdc-menu-item:hover {
+  background-color: rgba(122, 87, 255, 0.06) !important;
+}
+
+/* === RESPONSIVE: toolbar un poco más compacta en móviles === */
+@media (max-width: 768px) {
+  .custom-toolbar {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .btn-rojo {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+}
