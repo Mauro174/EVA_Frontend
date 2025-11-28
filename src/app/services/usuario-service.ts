@@ -21,12 +21,22 @@ private listaCambio = new Subject<Usuario[]>();
     return this.http.get<Usuario[]>(this.url);
   }
 
+  insert(s: Usuario) {
+    return this.http.post(this.url, s);
+  }
+
   setList(listaNueva: Usuario[]) {
     this.listaCambio.next(listaNueva);
   }
 
   getList() {
     return this.listaCambio.asObservable();
+  }
+  listId(id: number) {
+    return this.http.get<Usuario>(`${this.url}/${id}`);
+  }
+  update(s: Usuario) {
+    return this.http.put(`${this.url}`, s, { responseType: 'text' });
   }
   
 }

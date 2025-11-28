@@ -1,41 +1,62 @@
-<div class="container">
-  <mat-toolbar class="custom-toolbar">
+@if (verificar()) {
+<header>
+  <div class="header-content">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <a routerLink="/" class="logo-link">
+        <img src="assets/eva.png" alt="logo EVA" />
+        <span class="logo-text">EVA</span>
+      </a>
+    </div>
+
+    <!-- BOTÓN HAMBURGUESA (MÓVIL) -->
     <button
-      class="btn-rojo"
-      matButton
-      aria-label="Example icon-button with menu icon"
-      [matMenuTriggerFor]="menuSoftware"
+      class="menu-toggle"
+      aria-label="Menú"
+      [attr.aria-expanded]="menuOpen"
+      (click)="toggleMenu()"
     >
-      <mat-icon>computer</mat-icon>Usuario
+      ☰
     </button>
-    <button
-      class="btn-rojo"
-      matButton
-      aria-label="Example icon-button with menu icon"
-      [matMenuTriggerFor]="menuLicencia"
-    >
-      <mat-icon>article</mat-icon>Licencia
-    </button>
-    <button
-      class="btn-rojo"
-      matButton
-      aria-label="Example icon-button with menu icon"
-      [matMenuTriggerFor]="menuReporte"
-    >
-      <mat-icon>article</mat-icon>Reportes
-    </button>
-  </mat-toolbar>
-  <mat-menu #menuSoftware="matMenu">
-    <button mat-menu-item routerLink="/usuarios"><mat-icon>list</mat-icon>Listar</button>
-    <button mat-menu-item routerLink="/softwares/news"><mat-icon>add</mat-icon>Registrar</button>
-    <button mat-menu-item routerLink="/softwares/searchs"><mat-icon>search</mat-icon>Buscar</button>
-  </mat-menu>
-  <mat-menu #menuLicencia="matMenu">
-    <button mat-menu-item routerLink="/licences"><mat-icon>list</mat-icon>Listar</button>
-    <button mat-menu-item routerLink="/licences/news"><mat-icon>add</mat-icon>Registrar</button>
-    <button mat-menu-item routerLink="/licences/searchs"><mat-icon>search</mat-icon>Buscar</button>
-  </mat-menu>
-  <mat-menu #menuReporte="matMenu">
-    <button mat-menu-item routerLink="/quantities"><mat-icon>list</mat-icon>Cantidad</button>
-  </mat-menu>
-</div>
+
+    <!-- NAV -->
+    <nav class="navigation" [class.active]="menuOpen">
+      <ul class="main-menu">
+
+        <!-- HOME -->
+        <li>
+          <a routerLink="/homes">
+            <span class="material-icons">home</span>
+            <span class="texto-completo">Home</span>
+          </a>
+        </li>
+  
+
+        <!-- MENÚ USUARIO (SIEMPRE) -->
+        <li class="submenu">
+          <a class="submenu-trigger">
+            <span class="material-icons">person</span>
+            <span class="texto-completo">Usuario</span>
+          </a>
+          <ul class="submenu-items">
+            <li>
+              <a routerLink="/login" (click)="cerrar()">
+                <span class="material-icons">logout</span>
+                Cerrar sesión
+              </a>
+            </li>
+            <li>
+              <a>
+                Rol: <strong>{{ role }}</strong>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+
+  </div>
+</header>
+}

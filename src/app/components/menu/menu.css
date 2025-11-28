@@ -1,133 +1,167 @@
-/* === TOOLBAR ESTILO EVA (GLASS, STICKY, LIMPIO) === */
-.custom-toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 900;
-  width: 100%;
+/* === HEADER BASE === */
+.header-content {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 24px;
-  box-sizing: border-box;
-
-  /* Fondo tipo header EVA */
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  justify-content: space-between;
+  padding: 12px 40px;
 }
 
-/* Deja que el primer botón quede a la izquierda y el resto se vaya a la derecha si quieres */
-.custom-toolbar-spacer {
-  flex: 1 1 auto;
+/* === MENÚ PRINCIPAL === */
+.navigation .main-menu {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-/* === BOTÓN PRINCIPAL DEL MENÚ (MORADO EVA, PASTILLA) === */
-.btn-rojo {
-  background: #6a5ac9;              /* morado EVA */
-  color: #ffffff;
-  border: none;
-  border-radius: 999px;              /* estilo pill */
-  font-size: 0.9rem;
+/* Items principales */
+.navigation .main-menu > li > a,
+.navigation .submenu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.05rem;
   font-weight: 600;
-  margin: 4px 0;
-  padding: 8px 16px;
+  color: #111827;
+  text-decoration: none;
+  cursor: pointer;
+}
 
+.navigation .main-menu > li > a:hover,
+.navigation .submenu-trigger:hover {
+  color: #6a5ac9;
+}
+
+/* === SUBMENÚ USUARIOS === */
+
+/* Mantiene el item "Usuarios" alineado */
+.navigation .submenu {
+  position: relative;
+}
+
+/* Zona invisible para que el submenú NO se cierre rápido */
+.navigation .submenu::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 18px; /* zona segura */
+}
+
+/* Caja del submenú */
+.navigation .submenu-items {
+  position: absolute;
+
+  /* ⭐ Alineado exactamente debajo de “Usuarios” */
+  top: calc(100% + 8px);
+  left: 0;
+  right: auto;
+
+  background: #fff;
+  padding: 6px 0;
+  border-radius: 12px;
+  min-width: 210px;
+
+  border: 1px solid rgba(106, 90, 201, 0.22);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.15);
+
+  list-style: none;
+  margin: 0;
+
+  /* Anula heredados */
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 1000;
+}
+
+/* Mostrar submenú en hover */
+.navigation .submenu:hover .submenu-items {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Ítems internos */
+.navigation .submenu-items li {
+  margin: 0;
+  width: 100%;
+}
+
+.navigation .submenu-items li a {
   display: flex;
   align-items: center;
-  gap: 8px;
-  cursor: pointer;
-
-  box-shadow: 0 8px 18px rgba(106, 90, 201, 0.35);
-  transition:
-    background-color 0.18s ease,
-    color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.16s ease;
-}
-
-.btn-rojo:hover {
-  background-color: #5a48ce;
-  box-shadow: 0 12px 26px rgba(90, 72, 206, 0.45);
-  transform: translateY(-1px);
-}
-
-.btn-rojo:active {
-  transform: translateY(0);
-  box-shadow: 0 6px 14px rgba(90, 72, 206, 0.35);
-}
-
-/* Icono dentro del botón */
-.btn-rojo mat-icon,
-.btn-rojo .material-symbols-outlined {
-  font-size: 1.3rem;
-  line-height: 1;
-}
-
-/* Asegura alineación del texto */
-.btn-rojo span:not(.material-symbols-outlined),
-.btn-rojo {
-  vertical-align: middle;
-}
-
-/* Iconos y texto de la toolbar en blanco/morado */
-.custom-toolbar button,
-.custom-toolbar mat-icon {
-  color: #ffffff;
-}
-
-/* Si tienes otros botones de icono sueltos dentro del toolbar, que usen el mismo estilo base */
-.custom-toolbar button[mat-icon-button] {
-  color: #6a5ac9;
-  background-color: #ffffff;
-  border-radius: 999px;
-  margin-left: 4px;
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
-  transition:
-    background-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.16s ease;
-}
-
-.custom-toolbar button[mat-icon-button]:hover {
-  background-color: #f4f0ff;
-  transform: translateY(-1px);
-}
-
-/* === MENÚ DESPLEGABLE ESTILO GLASS EVA === */
-.mat-mdc-menu-panel {
-  background-color: rgba(255, 255, 255, 0.96) !important;
-  backdrop-filter: blur(10px);
-  border-radius: 12px !important;
-  border: 1px solid rgba(106, 90, 201, 0.22);
-  padding: 4px 0;
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.18);
-}
-
-/* Items del menú */
-.mat-mdc-menu-item {
-  color: #111827 !important;
-  font-size: 0.9rem;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
   font-weight: 500;
+  color: #111827;
+  text-decoration: none;
 }
 
-.mat-mdc-menu-item mat-icon {
-  color: #6a5ac9 !important;
+.navigation .submenu-items li a:hover {
+  background: rgba(106, 90, 201, 0.08);
+  color: #6a5ac9;
 }
 
-/* Hover de ítems del menú */
-.mat-mdc-menu-item:hover {
-  background-color: rgba(122, 87, 255, 0.06) !important;
+/* Tamaño de íconos */
+.navigation .submenu-items .material-icons,
+.navigation .submenu-trigger .material-icons {
+  font-size: 20px;
 }
 
-/* === RESPONSIVE: toolbar un poco más compacta en móviles === */
+/* === MENÚ HAMBURGUESA === */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6a5ac9;
+}
+
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
-  .custom-toolbar {
-    padding: 6px 12px;
-    gap: 8px;
+  .menu-toggle {
+    display: block;
   }
 
-  .btn-rojo {
-    font-size: 0.85rem;
-    padding: 6px 12px;
+  .navigation {
+    display: none;
+    width: 100%;
+  }
+
+  .navigation.active {
+    display: block;
+  }
+
+  .navigation .main-menu {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .navigation .main-menu > li {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .navigation .main-menu > li > a,
+  .submenu-trigger {
+    padding: 14px 20px;
+    font-size: 1.2rem;
+    display: flex;
+    width: 100%;
+  }
+
+  .submenu-items {
+    position: static;
+    opacity: 1 !important;
+    pointer-events: auto;
+    box-shadow: none;
+    border: none;
   }
 }
