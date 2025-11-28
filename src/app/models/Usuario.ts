@@ -14,6 +14,7 @@ export class Usuario {
   fecreacionUsuario: Date = new Date();
   feactualizacionUsuario: Date = new Date();
   enabled: boolean = false;
+  rolUsuario:string = "";
 
   roles: Rol[] = [];
 }
