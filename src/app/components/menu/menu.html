@@ -1,5 +1,8 @@
+@if (verificar()) {
 <header>
   <div class="header-content">
+
+    <!-- LOGO -->
     <div class="logo">
       <a routerLink="/" class="logo-link">
         <img src="assets/eva.png" alt="logo EVA" />
@@ -7,28 +10,53 @@
       </a>
     </div>
 
-    <div class="ml-auto md:hidden">
-      <button
-        class="menu-toggle"
-        id="menu-toggle"
-        aria-label="Menú"
-        [attr.aria-expanded]="menuOpen"
-        (click)="toggleMenu()"
-      >
-        ☰
-      </button>
+    <!-- BOTÓN HAMBURGUESA (MÓVIL) -->
+    <button
+      class="menu-toggle"
+      aria-label="Menú"
+      [attr.aria-expanded]="menuOpen"
+      (click)="toggleMenu()"
+    >
+      ☰
+    </button>
 
-      <nav class="navigation" id="nav-menu" [class.active]="menuOpen">
-        <ul>
-          <li><a routerLink="/">Inicio</a></li>
-          <li><a href="#acerca">Acerca</a></li>
-          <li><a routerLink="/usuarios">Usuarios</a></li>
-          <!-- Más rutas cuando las tengas -->
-          <!-- <li><a routerLink="/registro">Registrarse</a></li> -->
-          <!-- <li><a routerLink="/clientes">Clientes</a></li> -->
-          <!-- <li><a routerLink="/login">Iniciar Sesión</a></li> -->
-        </ul>
-      </nav>
-    </div>
+    <!-- NAV -->
+    <nav class="navigation" [class.active]="menuOpen">
+      <ul class="main-menu">
+
+        <!-- HOME -->
+        <li>
+          <a routerLink="/homes">
+            <span class="material-icons">home</span>
+            <span class="texto-completo">Home</span>
+          </a>
+        </li>
+  
+
+        <!-- MENÚ USUARIO (SIEMPRE) -->
+        <li class="submenu">
+          <a class="submenu-trigger">
+            <span class="material-icons">person</span>
+            <span class="texto-completo">Usuario</span>
+          </a>
+          <ul class="submenu-items">
+            <li>
+              <a routerLink="/login" (click)="cerrar()">
+                <span class="material-icons">logout</span>
+                Cerrar sesión
+              </a>
+            </li>
+            <li>
+              <a>
+                Rol: <strong>{{ role }}</strong>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+
   </div>
 </header>
+}

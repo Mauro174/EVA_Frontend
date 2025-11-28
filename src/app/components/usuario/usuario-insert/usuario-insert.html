@@ -1,0 +1,115 @@
+<form [formGroup]="form" (ngSubmit)="aceptar()" class="usuario-form">
+
+  <h2 class="form-title">
+    {{ edicion ? 'Editar usuario' : 'Registrar usuario' }}
+  </h2>
+
+  <!-- EMAIL -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="emailUsuario" type="email" />
+    <mat-error *ngIf="form.get('emailUsuario')?.hasError('required')">
+      El email es obligatorio
+    </mat-error>
+    <mat-error *ngIf="form.get('emailUsuario')?.hasError('email')">
+      Ingresa un email válido
+    </mat-error>
+  </mat-form-field>
+
+  <!-- PASSWORD -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Contraseña</mat-label>
+    <input matInput formControlName="passwordUsuario" type="password" />
+    <mat-error *ngIf="form.get('passwordUsuario')?.hasError('required')">
+      La contraseña es obligatoria
+    </mat-error>
+    <mat-error *ngIf="form.get('passwordUsuario')?.hasError('minlength')">
+      Mínimo 6 caracteres
+    </mat-error>
+  </mat-form-field>
+
+  <!-- NOMBRE -->
+  <mat-form-field appearance="outline" class="half-width">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="nombreUsuario" />
+    <mat-error *ngIf="form.get('nombreUsuario')?.hasError('required')">
+      El nombre es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <!-- APELLIDO -->
+  <mat-form-field appearance="outline" class="half-width">
+    <mat-label>Apellido</mat-label>
+    <input matInput formControlName="apellidoUsuario" />
+    <mat-error *ngIf="form.get('apellidoUsuario')?.hasError('required')">
+      El apellido es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <!-- FECHA NACIMIENTO -->
+  <mat-form-field appearance="outline" class="half-width">
+    <mat-label>Fecha de nacimiento</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      formControlName="feNacimientoUsuario"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.get('feNacimientoUsuario')?.hasError('required')">
+      La fecha de nacimiento es obligatoria
+    </mat-error>
+  </mat-form-field>
+
+  <!-- CONDICIÓN MÉDICA -->
+  <mat-form-field appearance="outline" class="half-width">
+    <mat-label>Condición médica (opcional)</mat-label>
+    <input matInput formControlName="condicionmedicaUsuario" />
+  </mat-form-field>
+
+  <!-- MOVILIDAD -->
+  <div class="field-block">
+    <label class="field-label">¿Tiene movilidad reducida?</label>
+    <mat-radio-group formControlName="movilidadUsuario" class="radio-group">
+      <mat-radio-button [value]="true">Sí</mat-radio-button>
+      <mat-radio-button [value]="false">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <!-- PERSONALIZADO -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Preferencias personalizadas (opcional)</mat-label>
+    <input matInput formControlName="personalizadoUsuario" />
+  </mat-form-field>
+
+  <!-- VOLUMEN -->
+  <mat-form-field appearance="outline" class="half-width">
+    <mat-label>Volumen (0 a 100)</mat-label>
+    <input
+      matInput
+      type="number"
+      formControlName="volumenUsuario"
+      min="0"
+      max="100"
+    />
+    <mat-error *ngIf="form.get('volumenUsuario')?.hasError('required')">
+      El volumen es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <!-- ENABLED -->
+  <div class="field-block">
+    <label class="field-label">Estado</label>
+    <mat-radio-group formControlName="enabled" class="radio-group">
+      <mat-radio-button [value]="true">Activo</mat-radio-button>
+      <mat-radio-button [value]="false">Inactivo</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <!-- BOTÓN -->
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="submit">
+      {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+    </button>
+  </div>
+</form>
