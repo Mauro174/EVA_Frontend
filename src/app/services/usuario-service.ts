@@ -35,9 +35,16 @@ private listaCambio = new Subject<Usuario[]>();
   listId(id: number) {
     return this.http.get<Usuario>(`${this.url}/${id}`);
   }
-  update(s: Usuario) {
-    return this.http.put(`${this.url}`, s, { responseType: 'text' });
+  update(usuario: any) {
+  return this.http.put(`${this.url}`, usuario, {
+    responseType: 'text' as 'json'   // 👈 truquito para que compile
+  }); 
+}
+
+delete(id: number) {
+    return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
   }
+
   
 }
 

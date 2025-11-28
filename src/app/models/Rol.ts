@@ -1,4 +1,4 @@
 export class Rol {
-  id: number = 0;
+  id?: number;
   rol: string = "";
 }

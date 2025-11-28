@@ -6,141 +6,199 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 
 import { Usuario } from '../../../models/Usuario';
 import { UsuarioService } from '../../../services/usuario-service';
+import { Rol } from '../../../models/Rol';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-usuario-insert',
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    CommonModule,
     MatInputModule,
     MatDatepickerModule,
     MatSelectModule,
-    CommonModule,
     MatRadioModule,
     MatNativeDateModule,
-    MatButtonModule,
-  ],
+    MatButtonModule  ],
   templateUrl: './usuario-insert.html',
   styleUrl: './usuario-insert.css',
 })
 export class UsuarioInsert implements OnInit {
   form: FormGroup = new FormGroup({});
-  usuario: Usuario = new Usuario();
-  edicion: boolean = false;
-  id: number = 0;
+  usu: Usuario = new Usuario();
+  edicion = false;
+  id = 0;
+  today = new Date();
+
+  roles = [
+    { value: 'ADMIN', viewValue: 'ADMIN' },
+    { value: 'PACIENTE', viewValue: 'PACIENTE' },
+    { value: 'MEDICO', viewValue: 'MÉDICO' },
+  ];
 
   constructor(
     private uS: UsuarioService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+  private snackBar: MatSnackBar ,
   ) {}
 
   ngOnInit(): void {
-    // lee parámetro /usuarios/ediciones/:id
-    this.route.params.subscribe((data: Params) => {
-      this.id = data['id'];
-      this.edicion = data['id'] != null;
-      this.init(); // si es edición, carga data
-    });
-
-    // === FORMULARIO REACTIVO VINCULADO A TU ENTIDAD ===
+    // 1) Primero creo el formulario
     this.form = this.formBuilder.group({
-      idUsuario: [''], // oculto / solo para edición
+      id: [''],
 
-      emailUsuario: [
+      nombre: ['', [Validators.required, Validators.maxLength(120)]],
+      apellido: ['', [Validators.required, Validators.maxLength(120)]],
+
+      email: [
         '',
-        [Validators.required, Validators.email, Validators.maxLength(80)],
+        [
+          Validators.required,
+          Validators.email,
+          Validators.maxLength(80),
+          Validators.pattern(/.+\.com$/),
+        ],
       ],
 
-      passwordUsuario: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
 
-      nombreUsuario: ['', [Validators.required, Validators.maxLength(120)]],
+      rol: ['', [Validators.required]],
 
-      apellidoUsuario: ['', [Validators.required, Validators.maxLength(120)]],
+      fechaNac: ['', [Validators.required]],
 
-      feNacimientoUsuario: ['', Validators.required],
+      condicion: ['', Validators.maxLength(100)],
 
-      condicionmedicaUsuario: ['', Validators.maxLength(100)],
+      movilidad: [false, [Validators.required]],
 
-      movilidadUsuario: [false, Validators.required],
-
-      personalizadoUsuario: ['', Validators.maxLength(100)],
-
-      volumenUsuario: [
+      volumen: [
         50,
         [Validators.required, Validators.min(0), Validators.max(100)],
       ],
 
-      enabled: [true],
-      // roles: ['ROLE_USER']  // si luego quieres un select de rol, lo mapeamos aquí
+      personalizadoUsuario: [
+        '',
+        [Validators.required, Validators.minLength(5), Validators.maxLength(100)],
+      ],
+    });
+
+    // 2) Luego leo el parámetro y si es edición, cargo la data
+    this.route.params.subscribe((data: Params) => {
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
+      if (this.edicion) {
+        this.init();
+      }
     });
   }
 
-  // === BOTÓN GUARDAR / REGISTRAR ===
   aceptar(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    // mapeo directo form -> modelo
-    this.usuario = { ...this.form.value } as Usuario;
-
-    // si quisieras mapear roles en el body:
-    // this.usuario.roles = [{ rol: this.form.value.rol }] as any;
-
-    if (this.edicion) {
-      this.uS.update(this.usuario).subscribe(() => {
-        this.uS.list().subscribe((data) => {
-          this.uS.setList(data);
-          this.router.navigate(['/usuarios']);
-        });
-      });
-    } else {
-      this.uS.insert(this.usuario).subscribe(() => {
-        this.uS.list().subscribe((data) => {
-          this.uS.setList(data);
-          this.router.navigate(['/usuarios']);
-        });
-      });
-    }
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
   }
 
-  // === CARGAR DATA EN EDICIÓN ===
-  init(): void {
-    if (this.edicion) {
-      this.uS.listId(this.id).subscribe((data) => {
-        // convierte fechas del backend a Date para el datepicker
-        const fNac = data.feNacimientoUsuario
-          ? new Date(data.feNacimientoUsuario)
-          : null;
+  if (this.edicion) {
+    // 🔹 construir el DTO que el backend espera
+    const dto = {
+      idUsuario: this.form.value.id,
+      rolUsuario: this.form.value.rol, // 👈 STRING
+      emailUsuario: this.form.value.email,
+      passwordUsuario: this.form.value.password,
+      nombreUsuario: this.form.value.nombre,
+      apellidoUsuario: this.form.value.apellido,
+      feNacimientoUsuario: this.form.value.fechaNac,
+      condicionmedicaUsuario: this.form.value.condicion,
+      movilidadUsuario: this.form.value.movilidad,
+      personalizadoUsuario: this.form.value.personalizadoUsuario,
+      volumenUsuario: this.form.value.volumen,
+      enabled: true
+    };
 
-        this.form.patchValue({
-          idUsuario: data.idUsuario,
-          emailUsuario: data.emailUsuario,
-          passwordUsuario: data.passwordUsuario,
-          nombreUsuario: data.nombreUsuario,
-          apellidoUsuario: data.apellidoUsuario,
-          feNacimientoUsuario: fNac,
-          condicionmedicaUsuario: data.condicionmedicaUsuario,
-          movilidadUsuario: data.movilidadUsuario,
-          personalizadoUsuario: data.personalizadoUsuario,
-          volumenUsuario: data.volumenUsuario,
-          enabled: data.enabled,
-          // rol: data.roles?.[0]?.rol
-        });
+    this.uS.update(dto).subscribe(() => {
+      this.uS.list().subscribe((data) => {
+        this.uS.setList(data);
+
+this.snackBar.open('✔ Usuario actualizado exitosamente', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: ['eva-snackbar-success']
       });
-    }
+
+
+        this.router.navigate(['/usuarios']);
+      });
+    });
+  } else {
+    // para insertar puedes seguir usando this.usu como lo tenías
+    this.usu.idUsuario = this.form.value.id;
+    this.usu.nombreUsuario = this.form.value.nombre;
+    this.usu.apellidoUsuario = this.form.value.apellido;
+    this.usu.emailUsuario = this.form.value.email;
+    this.usu.passwordUsuario = this.form.value.password;
+    this.usu.feNacimientoUsuario = this.form.value.fechaNac;
+    this.usu.condicionmedicaUsuario = this.form.value.condicion;
+    this.usu.movilidadUsuario = this.form.value.movilidad;
+    this.usu.volumenUsuario = this.form.value.volumen;
+    this.usu.enabled = true;
+    this.usu.personalizadoUsuario = this.form.value.personalizadoUsuario;
+
+    const rolSeleccionado = this.form.value.rol;
+    this.usu.roles = [{ rol: rolSeleccionado } as Rol];
+
+    this.uS.insert(this.usu).subscribe(() => {
+      this.uS.list().subscribe((data) => {
+        this.uS.setList(data);
+
+
+this.snackBar.open('✔ Usuario registrado correctamente', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: ['eva-snackbar-success']
+      });
+
+        this.router.navigate(['/usuarios']);
+      });
+    });
+  }
+}
+
+
+  private init(): void {
+    this.uS.listId(this.id).subscribe((data) => {
+      const fNac = data.feNacimientoUsuario
+        ? new Date(data.feNacimientoUsuario)
+        : null;
+
+      this.form.patchValue({
+        id: data.idUsuario,
+        nombre: data.nombreUsuario,
+        apellido: data.apellidoUsuario,
+        email: data.emailUsuario,
+        password: data.passwordUsuario,
+        rol: data.rolUsuario,
+ // 👈 aquí va el string del rol
+        fechaNac: fNac,
+        condicion: data.condicionmedicaUsuario,
+        movilidad: data.movilidadUsuario,
+        volumen: data.volumenUsuario,
+        personalizadoUsuario: data.personalizadoUsuario,
+      });
+    });
   }
 }
