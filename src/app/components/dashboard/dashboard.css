@@ -1,0 +1,100 @@
+/* ===== LAYOUT GENERAL DEL PANEL EVA ===== */
+.eva-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at top left,
+    #f5f0ff,
+    #f7f7ff 45%,
+    #fdfbff 100%
+  );
+}
+
+/* ===== SIDEBAR LATERAL ===== */
+.eva-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  background: #ffffff;
+  box-shadow: 4px 0 16px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 900;
+}
+
+.eva-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #6a5ac9;
+  font-size: 1.2rem;
+}
+
+.eva-sidebar-header img {
+  width: 48px;
+  height: 48px;
+}
+
+.eva-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.eva-sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: #374151;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.eva-sidebar-menu a .material-icons {
+  font-size: 20px;
+}
+
+.eva-sidebar-menu a:hover,
+.eva-sidebar-menu a.active {
+  background: #f3efff;
+  color: #6a5ac9;
+  transform: translateX(2px);
+}
+
+/* ===== CONTENEDOR PRINCIPAL (HEADER + CONTENIDO) ===== */
+.eva-main {
+  margin-left: 240px;               /* mismo ancho del sidebar */
+  width: calc(100% - 240px);        /* evita espacio en blanco a la derecha */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenido debajo del header (donde se pinta homes / usuarios / etc.) */
+.eva-content {
+  padding: 0 32px 32px;            /* sin espacio arriba para que pegue al header */
+  box-sizing: border-box;
+  flex: 1;
+}
+
+/* ===== RESPONSIVE BÁSICO ===== */
+@media (max-width: 768px) {
+  .eva-sidebar {
+    display: none;                  /* si quieres, oculta sidebar en móvil */
+  }
+
+  .eva-main {
+    margin-left: 0;
+    width: 100%;
+  }
+}

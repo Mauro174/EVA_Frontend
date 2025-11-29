@@ -1,0 +1,53 @@
+<!-- dashboard.html -->
+<div class="eva-dashboard">
+
+  <!-- SIDEBAR LATERAL -->
+  <aside class="eva-sidebar">
+    <div class="eva-sidebar-header">
+      <img src="assets/eva.png" alt="Logo EVA" />
+      <span>EVA Panel</span>
+    </div>
+    
+
+    <nav class="eva-sidebar-menu">
+        
+          <a routerLink="/homes">
+            <span class="material-icons">home</span>
+            <span class="texto-completo">Home</span>
+          </a>
+        
+
+      <a routerLink="/usuarios" routerLinkActive="active">
+        <span class="material-icons">people</span>
+        <span>Gestionar usuarios</span>
+      </a>
+
+      <a routerLink="/relacionesusuarios" routerLinkActive="active">
+        <span class="material-icons">chat</span>
+        <span>Gestionar Relaciones</span>
+      </a>
+
+      <a routerLink="/alertas" routerLinkActive="active">
+        <span class="material-icons">notifications</span>
+        <span>Alertas</span>
+      </a>
+
+      <a routerLink="/reportes" routerLinkActive="active">
+        <span class="material-icons">bar_chart</span>
+        <span>Reportes</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <main class="eva-main">
+    <!-- Header superior (tu menú actual) -->
+    <app-menu></app-menu>
+
+    <!-- Donde se pinta homes / usuarios / etc -->
+    <section class="eva-content">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+
+</div>
