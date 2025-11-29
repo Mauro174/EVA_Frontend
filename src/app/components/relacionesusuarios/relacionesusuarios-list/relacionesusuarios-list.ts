@@ -1,18 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { Usuario } from '../../../models/Usuario';
-import { UsuarioService } from '../../../services/usuario-service';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-
-// ⭐ Importación para mensajes de éxitoa
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { RelacionesUsuarios } from '../../../models/RelacionesUsuarios';
+import { RelacionesUsuariosService } from '../../../services/relacionesusuarios-service';
 
 @Component({
-  selector: 'app-usuario-list',
+  selector: 'app-relacionesusuarios-list',
   imports: [
     MatTableModule,
     CommonModule,
@@ -22,21 +20,19 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatPaginatorModule,
     MatSnackBarModule // ⭐ agregado
   ],
-  templateUrl: './usuario-list.html',
-  styleUrl: './usuario-list.css',
+  templateUrl: './relacionesusuarios-list.html',
+  styleUrl: './relacionesusuarios-list.css',
 })
-export class UsuarioList implements OnInit, AfterViewInit {
+export class RelacionesusuariosList implements OnInit,AfterViewInit{
+    dataSource: MatTableDataSource<RelacionesUsuarios> = new MatTableDataSource();
+    //aqui declaramos nuestras columnas
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5','c8','c9'];
 
-  dataSource: MatTableDataSource<Usuario> = new MatTableDataSource();
-
-  //aqui declaramos nuestras columnas
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6' , 'c7','c8','c9'];
-
-  //aqui declaramos el paginador
+   //aqui declaramos el paginador
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private vS: UsuarioService,
+    private vS: RelacionesUsuariosService,
     private snackBar: MatSnackBar // ⭐ agregado
   ) {}
 
@@ -60,7 +56,7 @@ export class UsuarioList implements OnInit, AfterViewInit {
   }
 
   eliminar(id:number): void {
-    if (!confirm('¿Seguro que deseas eliminar este usuario?')) {
+    if (!confirm('¿Seguro que deseas eliminar esta relación?')) {
       return;
     }
     this.vS.delete(id).subscribe({
@@ -69,7 +65,7 @@ export class UsuarioList implements OnInit, AfterViewInit {
         this.recargarTabla();
 
         // notificación bonita
-        this.snackBar.open('Usuario eliminado correctamente', 'Cerrar', {
+        this.snackBar.open('Relación eliminada correctamente', 'Cerrar', {
           duration: 3000,
           verticalPosition: 'top'
         });
@@ -83,4 +79,6 @@ export class UsuarioList implements OnInit, AfterViewInit {
       }
     });
   }
+
+
 }

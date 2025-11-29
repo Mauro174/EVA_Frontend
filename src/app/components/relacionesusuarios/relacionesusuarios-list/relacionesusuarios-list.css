@@ -1,0 +1,53 @@
+/* === BOTONES DENTRO DE LA TABLA – ESTILO EVA === */
+button[matButton] {
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px; /* pill */
+  padding: 4px 14px;
+
+  background-color: #6a5ac9;       /* morado EVA */
+  color: white;
+
+  border: none;
+  cursor: pointer;
+
+  box-shadow: 0px 4px 10px rgba(106, 90, 201, 0.25);
+  transition:
+    background-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.15s ease;
+}
+
+/* Hover */
+button[matButton]:hover {
+  background-color: #5a48ce;
+  box-shadow: 0px 6px 14px rgba(90, 72, 206, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Active */
+button[matButton]:active {
+  transform: translateY(0px);
+  box-shadow: 0px 3px 8px rgba(90, 72, 206, 0.25);
+}
+
+/* Íconos dentro de botones */
+button[matButton] mat-icon {
+  font-size: 1.1rem;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* === RESPONSIVO === */
+@media (max-width: 768px) {
+  button[matButton] {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  button[matButton] mat-icon {
+    font-size: 1rem;
+    margin-right: 2px;
+  }
+}

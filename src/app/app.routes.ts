@@ -4,6 +4,9 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { Landing } from './components/landing/landing';
 import { Usuario } from './components/usuario/usuario';
 import { UsuarioInsert } from './components/usuario/usuario-insert/usuario-insert';
+import { seguridadGuard } from './guard/seguridad-guard';
+import { Relacionesusuarios } from './components/relacionesusuarios/relacionesusuarios';
+import { RelacionesusuariosInsert } from './components/relacionesusuarios/relacionesusuarios-insert/relacionesusuarios-insert';
 
 export const routes: Routes = [
 
@@ -15,6 +18,7 @@ export const routes: Routes = [
   {
     path: '',
     component: Dashboard,
+    canActivate: [seguridadGuard],
     children: [
       { path: 'homes', component: Landing },
 
@@ -22,6 +26,11 @@ export const routes: Routes = [
       { path: 'usuarios', component: Usuario },
       { path: 'usuarios/nuevo', component: UsuarioInsert },
       { path: 'usuarios/edits/:id', component: UsuarioInsert },
+
+      // USUARIOS
+      { path: 'relacionesusuarios', component: Relacionesusuarios },
+      { path: 'relacionesusuarios/nuevo', component: RelacionesusuariosInsert },
+      { path: 'relacionesusuarios/edits/:id', component: RelacionesusuariosInsert },
 
     ]
   }
