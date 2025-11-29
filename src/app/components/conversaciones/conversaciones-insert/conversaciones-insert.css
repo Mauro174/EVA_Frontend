@@ -1,0 +1,34 @@
+.form-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.form-card {
+  width: 80%;
+  max-width: 700px;
+  background: #ffffffd7;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.06);
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.btn-submit {
+  grid-column: span 2;
+  justify-self: flex-end;
+  padding: 10px 28px;
+  border-radius: 20px;
+}
