@@ -1,0 +1,81 @@
+<div class="lista-container">
+
+  <!-- Encabezado con botón -->
+  <div class="header-lista">
+    <h1>Lista de Relaciones</h1>
+
+    <button mat-raised-button color="primary"
+            class="btn-nuevo"
+            routerLink="/relacionesusuarios/nuevo">
+      <mat-icon>add</mat-icon>
+      Nueva Relación
+    </button>
+  </div>
+
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!-- Nº -->
+      <ng-container matColumnDef="c1">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.idRelacion }}</td>
+      </ng-container>
+
+      <!-- Nombre -->
+      <ng-container matColumnDef="c2">
+        <th mat-header-cell *matHeaderCellDef>Tipo de Relacion</th>
+        <td mat-cell *matCellDef="let element">{{ element.tipoRelacion }}</td>
+      </ng-container>
+
+      <!-- Fecha nacimiento -->
+      <ng-container matColumnDef="c3">
+        <th mat-header-cell *matHeaderCellDef>Parentesco</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.parentescoRelacion}}
+        </td>
+      </ng-container>
+
+      <!-- Condición médica -->
+      <ng-container matColumnDef="c4">
+        <th mat-header-cell *matHeaderCellDef>Paciente</th>
+        <td mat-cell *matCellDef="let element">{{ element.usuario.nombreUsuario + ' ' + element.usuario.apellidoUsuario  }}</td>
+      </ng-container>
+
+      <!-- Movilidad -->
+      <ng-container matColumnDef="c5">
+        <th mat-header-cell *matHeaderCellDef>Responsable/Médico</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.relacionado.nombreUsuario + ' ' + element.usuario.apellidoUsuario}}
+        </td>
+      </ng-container>
+
+      <!-- Actualizar -->
+      <ng-container matColumnDef="c8">
+        <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button
+                  color="primary"
+                  [routerLink]="['/relacionesusuarios/edits', element.idRelacion]">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Eliminar -->
+      <ng-container matColumnDef="c9">
+        <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="eliminar(element.idRelacion)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[4, 8, 10]" showFirstLastButtons></mat-paginator>
+
+  </div>
+</div>

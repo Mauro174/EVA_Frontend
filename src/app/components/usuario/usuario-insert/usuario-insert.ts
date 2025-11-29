@@ -112,7 +112,7 @@ export class UsuarioInsert implements OnInit {
   }
 
   if (this.edicion) {
-    // 🔹 construir el DTO que el backend espera
+    // 🔹 construir el DTO que el backend esperaa
     const dto = {
       idUsuario: this.form.value.id,
       rolUsuario: this.form.value.rol, // 👈 STRING

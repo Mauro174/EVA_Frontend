@@ -1,0 +1,103 @@
+<div class="usuario-page">
+  <div class="usuario-card">
+    <h2 class="form-title">
+      {{ edicion ? 'Editar relación' : 'Registrar relación' }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="aceptar()" class="usuario-form">
+      <!-- ID solo en edición -->
+      @if (edicion) {
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>ID relación</mat-label>
+          <input matInput formControlName="idRelacion" readonly />
+        </mat-form-field>
+      }
+
+      <!-- Tipo de relación -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Tipo de relación*</mat-label>
+        <input
+          matInput
+          formControlName="tipoRelacion"
+          placeholder="Ej. Familiar, Médico, Responsable"
+        />
+        <mat-error>
+          @if (form.get('tipoRelacion')?.hasError('required')) {
+            El tipo de relación es obligatorio.
+          } @else if (form.get('tipoRelacion')?.hasError('maxlength')) {
+            Máximo 120 caracteres.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Parentesco -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Parentesco*</mat-label>
+        <mat-select formControlName="parentescoRelacion">
+          @for (p of parentesco; track p) {
+            <mat-option [value]="p.value">
+              {{ p.viewValue }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          @if (form.get('parentescoRelacion')?.hasError('required')) {
+            El parentesco es obligatorio.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Usuario (solo PACIENTES) -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Usuario (paciente)***</mat-label>
+        <mat-select formControlName="usuario" [compareWith]="compareUsuarios">
+          @for (u of usuariosPacientes; track u) {
+            <mat-option [value]="u">
+              {{ u.idUsuario }} - {{ u.nombreUsuario }} {{ u.apellidoUsuario }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          @if (form.get('usuario')?.hasError('required')) {
+            Debes seleccionar un paciente.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Usuario relacionado (solo MÉDICOS o FAMILIARES) -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Usuario relacionado (médico / familiar)***</mat-label>
+        <mat-select formControlName="relacionado" [compareWith]="compareUsuarios">
+          @for (u of usuariosResponsables; track u) {
+            <mat-option [value]="u">
+              {{ u.idUsuario }} - {{ u.nombreUsuario }} {{ u.apellidoUsuario }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          @if (form.get('relacionado')?.hasError('required')) {
+            Debes seleccionar el usuario relacionado.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Mensaje global cuando intenta relacionar al mismo usuario -->
+      @if (form.errors?.['mismaPersona']
+        && (form.get('usuario')?.touched || form.get('relacionado')?.touched)) {
+        <div class="form-global-error">
+          No puedo relacionar un usuario consigo mismo.
+        </div>
+      }
+
+      <!-- Botón -->
+      <button
+        mat-raised-button
+        color="primary"
+        class="primary-btn"
+        type="submit"
+      >
+        {{ edicion ? 'Guardar cambios' : 'Registrar relación' }}
+      </button>
+    </form>
+  </div>
+</div>
