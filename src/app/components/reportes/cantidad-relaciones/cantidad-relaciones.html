@@ -1,0 +1,45 @@
+<div class="reporte-page">
+  <mat-card class="reporte-card">
+    <h2 class="reporte-title">Reporte de relaciones por usuario</h2>
+
+    <div *ngIf="cargando" class="reporte-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div *ngIf="!cargando && errorMsg" class="reporte-error">
+      {{ errorMsg }}
+    </div>
+
+    <div *ngIf="!cargando && !errorMsg">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 reporte-table">
+
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Usuario </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombreUsuario }}
+          </td>
+        </ng-container>
+
+        <!-- Tipo de relación -->
+        <ng-container matColumnDef="tipoRelacion">
+          <th mat-header-cell *matHeaderCellDef> Tipo de relación </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.tipoRelacion }}
+          </td>
+        </ng-container>
+
+        <!-- Cantidad -->
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.cantidad }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card>
+</div>

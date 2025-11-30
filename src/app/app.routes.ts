@@ -1,3 +1,4 @@
+// routes.ts
 import { Routes } from '@angular/router';
 import { Autenticador } from './components/autenticador/autenticador';
 import { Dashboard } from './components/dashboard/dashboard';
@@ -5,8 +6,10 @@ import { Landing } from './components/landing/landing';
 import { Usuario } from './components/usuario/usuario';
 import { UsuarioInsert } from './components/usuario/usuario-insert/usuario-insert';
 import { seguridadGuard } from './guard/seguridad-guard';
+import { adminGuard } from './guard/admin-guard';   // ⬅️ NUEVO
 import { Relacionesusuarios } from './components/relacionesusuarios/relacionesusuarios';
 import { RelacionesusuariosInsert } from './components/relacionesusuarios/relacionesusuarios-insert/relacionesusuarios-insert';
+import { CantidadRelacionesComponent } from './components/reportes/cantidad-relaciones/cantidad-relaciones';
 
 export const routes: Routes = [
 
@@ -18,20 +21,22 @@ export const routes: Routes = [
   {
     path: '',
     component: Dashboard,
-    canActivate: [seguridadGuard],
+    canActivate: [seguridadGuard],   // ⬅️ solo verifica LOGIN
     children: [
       { path: 'homes', component: Landing },
 
-      // USUARIOS
-      { path: 'usuarios', component: Usuario },
-      { path: 'usuarios/nuevo', component: UsuarioInsert },
-      { path: 'usuarios/edits/:id', component: UsuarioInsert },
+      // USUARIOS (solo ADMIN)
+      { path: 'usuarios', component: Usuario, canActivate: [adminGuard] },
+      { path: 'usuarios/nuevo', component: UsuarioInsert, canActivate: [adminGuard] },
+      { path: 'usuarios/edits/:id', component: UsuarioInsert, canActivate: [adminGuard] },
 
-      // USUARIOS
-      { path: 'relacionesusuarios', component: Relacionesusuarios },
-      { path: 'relacionesusuarios/nuevo', component: RelacionesusuariosInsert },
-      { path: 'relacionesusuarios/edits/:id', component: RelacionesusuariosInsert },
+      // RELACIONES (solo ADMIN)
+      { path: 'relacionesusuarios', component: Relacionesusuarios, canActivate: [adminGuard] },
+      { path: 'relacionesusuarios/nuevo', component: RelacionesusuariosInsert, canActivate: [adminGuard] },
+      { path: 'relacionesusuarios/edits/:id', component: RelacionesusuariosInsert, canActivate: [adminGuard] },
 
+      // REPORTES (todos los logueados)
+      { path: 'reportes/reporte-relaciones', component: CantidadRelacionesComponent }
     ]
   }
 ];

@@ -11,18 +11,18 @@
 
     <nav class="eva-sidebar-menu">
         
-          <a routerLink="/homes">
-            <span class="material-icons">home</span>
-            <span class="texto-completo">Home</span>
-          </a>
+      <a routerLink="/homes">
+        <span class="material-icons">home</span>
+        <span class="texto-completo">Home</span>
+      </a>
         
-
-      <a routerLink="/usuarios" routerLinkActive="active">
+      <!-- SOLO ADMIN -->
+      <a routerLink="/usuarios" routerLinkActive="active" *ngIf="rol === 'ADMIN'">
         <span class="material-icons">people</span>
         <span>Gestionar usuarios</span>
       </a>
 
-      <a routerLink="/relacionesusuarios" routerLinkActive="active">
+      <a routerLink="/relacionesusuarios" routerLinkActive="active" *ngIf="rol === 'ADMIN'">
         <span class="material-icons">chat</span>
         <span>Gestionar Relaciones</span>
       </a>
@@ -32,7 +32,7 @@
         <span>Alertas</span>
       </a>
 
-      <a routerLink="/reportes" routerLinkActive="active">
+      <a routerLink="/reportes/reporte-relaciones" routerLinkActive="active">
         <span class="material-icons">bar_chart</span>
         <span>Reportes</span>
       </a>
@@ -41,10 +41,8 @@
 
   <!-- CONTENIDO -->
   <main class="eva-main">
-    <!-- Header superior (tu menú actual) -->
     <app-menu></app-menu>
 
-    <!-- Donde se pinta homes / usuarios / etc -->
     <section class="eva-content">
       <router-outlet></router-outlet>
     </section>
