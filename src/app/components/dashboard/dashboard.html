@@ -7,15 +7,12 @@
       <img src="assets/eva.png" alt="Logo EVA" />
       <span>EVA Panel</span>
     </div>
-    
 
     <nav class="eva-sidebar-menu">
-        
-          <a routerLink="/homes">
-            <span class="material-icons">home</span>
-            <span class="texto-completo">Home</span>
-          </a>
-        
+      <a routerLink="/homes" routerLinkActive="active">
+        <span class="material-icons">home</span>
+        <span class="texto-completo">Home</span>
+      </a>
 
       <a routerLink="/usuarios" routerLinkActive="active">
         <span class="material-icons">people</span>
@@ -25,6 +22,18 @@
       <a routerLink="/relacionesusuarios" routerLinkActive="active">
         <span class="material-icons">chat</span>
         <span>Gestionar Relaciones</span>
+      </a>
+
+      <!-- 🔹 NUEVO: Medicamentos -->
+      <a routerLink="/medicamentos" routerLinkActive="active">
+        <span class="material-icons">medication</span>
+        <span>Gestionar medicamentos</span>
+      </a>
+
+      <!-- 🔹 NUEVO: Conversaciones -->
+      <a routerLink="/conversaciones" routerLinkActive="active">
+        <span class="material-icons">forum</span>
+        <span>Gestionar conversaciones</span>
       </a>
 
       <a routerLink="/alertas" routerLinkActive="active">
@@ -41,10 +50,8 @@
 
   <!-- CONTENIDO -->
   <main class="eva-main">
-    <!-- Header superior (tu menú actual) -->
     <app-menu></app-menu>
 
-    <!-- Donde se pinta homes / usuarios / etc -->
     <section class="eva-content">
       <router-outlet></router-outlet>
     </section>
