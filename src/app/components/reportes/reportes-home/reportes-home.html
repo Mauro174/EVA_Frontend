@@ -1,0 +1,36 @@
+<div class="reportes-page">
+  <div class="reportes-card">
+    <h2 class="reportes-title">Reportes del sistema EVA</h2>
+    <p class="reportes-intro">
+      Elige un reporte para revisar la información consolidada de los usuarios.
+    </p>
+
+    <div class="reportes-grid">
+      <div
+        class="report-card"
+        *ngFor="let card of reportCards"
+        [ngClass]="{ 'report-card--primary': card.variant === 'primary' }"
+        (click)="irA(card.route)"
+      >
+        <div class="report-icon">
+          <!-- Puedes cambiar por iconos reales si quieres -->
+          <span *ngIf="card.variant === 'primary'">📋</span>
+          <span *ngIf="card.variant !== 'primary'">📁</span>
+        </div>
+
+        <h3 class="report-title">{{ card.title }}</h3>
+        <p class="report-subtitle">{{ card.subtitle }}</p>
+        <p class="report-description">
+          {{ card.description }}
+        </p>
+
+        <button
+          class="report-button"
+          [class.report-button-disabled]="!card.route"
+        >
+          {{ card.route ? 'Ver detalle' : 'En construcción' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

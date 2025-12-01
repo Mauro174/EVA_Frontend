@@ -11,21 +11,27 @@
 
     <nav class="eva-sidebar-menu">
         
-          <a routerLink="/homes">
-            <span class="material-icons">home</span>
-            <span class="texto-completo">Home</span>
-          </a>
+      <a routerLink="/homes">
+        <span class="material-icons">home</span>
+        <span class="texto-completo">Home</span>
+      </a>
         
-
-      <a routerLink="/usuarios" routerLinkActive="active">
+      <!-- SOLO ADMIN -->
+      <a routerLink="/usuarios" routerLinkActive="active" *ngIf="rol === 'ADMIN'">
         <span class="material-icons">people</span>
         <span>Gestionar usuarios</span>
       </a>
 
-      <a routerLink="/relacionesusuarios" routerLinkActive="active">
+      <a routerLink="/relacionesusuarios" routerLinkActive="active" *ngIf="rol === 'ADMIN'">
         <span class="material-icons">chat</span>
         <span>Gestionar Relaciones</span>
       </a>
+
+      <!-- NUEVO: FOTOS (solo ADMIN, si quieres) -->
+  <a routerLink="/fotos" routerLinkActive="active">
+    <span class="material-icons">collections</span>
+    <span>Gestionar fotos</span>
+  </a>
 
       <a routerLink="/alertas" routerLinkActive="active">
         <span class="material-icons">notifications</span>
@@ -41,10 +47,8 @@
 
   <!-- CONTENIDO -->
   <main class="eva-main">
-    <!-- Header superior (tu menú actual) -->
     <app-menu></app-menu>
 
-    <!-- Donde se pinta homes / usuarios / etc -->
     <section class="eva-content">
       <router-outlet></router-outlet>
     </section>
