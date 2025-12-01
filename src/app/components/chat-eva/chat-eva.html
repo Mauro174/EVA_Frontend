@@ -1,0 +1,14 @@
+<div class="eva-chat-container">
+  <h2>Conversación con EVA 🤖💜</h2>
+
+  <div class="chat-box">
+    <div *ngFor="let m of mensajes" class="msg" [ngClass]="m.tipo">
+      {{ m.texto }}
+    </div>
+  </div>
+
+  <form class="chat-input" (ngSubmit)="enviar()">
+    <input [(ngModel)]="mensaje" name="mensaje" placeholder="Escribe algo..." />
+    <button>Enviar</button>
+  </form>
+</div>

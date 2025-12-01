@@ -22,6 +22,8 @@ import { FotosList } from './components/fotos/fotos-list/fotos-list';
 import { FotosInsert } from './components/fotos/fotos-insert/fotos-insert';
 import { Fotos } from './components/fotos/fotos';
 import { ReporteFotosMasRecuerdos } from './components/reportes/reporte-fotos-mas-recuerdos/reporte-fotos-mas-recuerdos';
+import { ConversacionDemo } from './components/conversacion-demo/conversacion-demo';
+import { ChatEvaComponent } from './components/chat-eva/chat-eva';
 
 export const routes: Routes = [
 
@@ -32,12 +34,18 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Autenticador },
 
+  
+
   // TODAS LAS RUTAS INTERNAS VAN DENTRO DEL DASHBOARD
   {
     path: '',
     component: Dashboard,
     canActivate: [seguridadGuard],   // ⬅️ solo verifica LOGIN
     children: [
+
+      // 🔹 NUEVA RUTA PARA LA DEMO DE CONVERSACIÓN
+    { path: 'conversacion-demo', component: ConversacionDemo },
+    { path: 'probar-conversacion', component: ChatEvaComponent },
       { path: 'homes', component: Landing },
 
       // USUARIOS (solo ADMIN)

@@ -1,0 +1,113 @@
+/* Contenedor general */
+.eva-chat-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 24px 20px 28px;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Título */
+.eva-chat-container h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: 'Open Sans', sans-serif;
+  color: #111111;
+}
+
+/* Caja de mensajes */
+.chat-box {
+  background: #f5f6ff;
+  border-radius: 18px;
+  padding: 16px 12px;
+  height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Mensaje base */
+.msg {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Mensaje del usuario (derecha) */
+.msg.usuario {
+  margin-left: auto;
+  background: #c9cfff;
+  color: #111111;
+  border-bottom-right-radius: 4px;
+}
+
+/* Mensaje de EVA (izquierda) */
+.msg.eva {
+  margin-right: auto;
+  background: #ffffff;
+  color: #222222;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* Zona de input */
+.chat-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid #d0d3ff;
+  background: #f9f9ff;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.chat-input input:focus {
+  border-color: #5f7cff;
+  box-shadow: 0 0 0 2px rgba(95, 124, 255, 0.25);
+}
+
+/* Botón enviar */
+.chat-input button {
+  padding: 0 18px;
+  border-radius: 999px;
+  border: none;
+  background: #5f7cff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.chat-input button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(95, 124, 255, 0.4);
+  background: #4a64e5;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .eva-chat-container {
+    margin: 20px 12px;
+    padding: 18px 14px 22px;
+  }
+
+  .chat-box {
+    height: 360px;
+  }
+}
