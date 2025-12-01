@@ -1,53 +1,171 @@
-/* === BOTONES DENTRO DE LA TABLA – ESTILO EVA === */
-button[matButton] {
-  font-size: 0.8rem;
+/* ============================================
+   CONTENEDOR
+   ============================================ */
+
+.lista-container {
+  padding: 32px 24px 40px;
+}
+
+@media (min-width: 992px) {
+  .lista-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-top: 40px;
+  }
+}
+
+/* ============================================
+   HEADER: TÍTULO + TEXTO + BOTÓN
+   ============================================ */
+
+.header-lista {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Título principal */
+.header-lista h1 {
+  margin: 0 0 6px;
+  font-size: 2rem;
+  font-weight: 700; /* Open Sans Bold */
+  color: #1A1A1A;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Texto descriptivo */
+.intro-text {
+  margin: 0;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  color: #555555;
+  max-width: 520px;
+  line-height: 1.45;
+}
+
+/* Botón CTA "Nueva relación" (Primary EVA) */
+.btn-nuevo {
+  background-color: #5F7CFF !important;
+  color: #ffffff !important;
+
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 999px; /* pill */
-  padding: 4px 14px;
+  font-family: 'Open Sans', sans-serif;
 
-  background-color: #6a5ac9;       /* morado EVA */
-  color: white;
+  box-shadow: 0px 3px 10px rgba(95, 124, 255, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 
-  border: none;
-  cursor: pointer;
-
-  box-shadow: 0px 4px 10px rgba(106, 90, 201, 0.25);
-  transition:
-    background-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.15s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover */
-button[matButton]:hover {
-  background-color: #5a48ce;
-  box-shadow: 0px 6px 14px rgba(90, 72, 206, 0.35);
-  transform: translateY(-1px);
+.btn-nuevo:hover {
+  background-color: #4A63E6 !important;
+  box-shadow: 0px 5px 14px rgba(74, 99, 230, 0.30);
 }
 
-/* Active */
-button[matButton]:active {
-  transform: translateY(0px);
-  box-shadow: 0px 3px 8px rgba(90, 72, 206, 0.25);
-}
-
-/* Íconos dentro de botones */
-button[matButton] mat-icon {
+.btn-nuevo mat-icon {
   font-size: 1.1rem;
-  vertical-align: middle;
-  margin-right: 4px;
 }
 
-/* === RESPONSIVO === */
+/* ============================================
+   TABLA
+   ============================================ */
+
+table.mat-elevation-z8 {
+  width: 100%;
+  border-radius: 16px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Encabezados */
+table.mat-elevation-z8 th {
+  font-family: 'Open Sans', sans-serif;
+  color: #555555;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+/* Celdas */
+table.mat-elevation-z8 td {
+  font-family: 'Roboto', sans-serif;
+  color: #333333;
+  font-size: 0.95rem;
+}
+
+/* Hover fila */
+table.mat-elevation-z8 tr.mat-row:hover {
+  background-color: #f4f4ff;
+}
+
+/* Alinear acciones */
+td.mat-column-c8,
+td.mat-column-c9,
+th.mat-column-c8,
+th.mat-column-c9 {
+  text-align: center;
+}
+
+/* ============================================
+   ICONOS DE ACCIÓN
+   ============================================ */
+
+button[mat-icon-button].btn-edit mat-icon {
+  color: #5F7CFF !important;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+button[mat-icon-button].btn-edit:hover mat-icon {
+  color: #4A63E6 !important;
+  transform: scale(1.15);
+}
+
+button[mat-icon-button].btn-delete mat-icon {
+  color: #D9534F !important;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+button[mat-icon-button].btn-delete:hover mat-icon {
+  color: #C9302C !important;
+  transform: scale(1.15);
+}
+
+.mat-mdc-icon-button mat-icon {
+  color: inherit !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
 @media (max-width: 768px) {
-  button[matButton] {
-    font-size: 0.7rem;
-    padding: 3px 10px;
-    border-radius: 999px;
+  .lista-container {
+    padding: 20px 12px 32px;
   }
 
-  button[matButton] mat-icon {
-    font-size: 1rem;
-    margin-right: 2px;
+  .header-lista {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-lista h1 {
+    font-size: 1.6rem;
+  }
+
+  .btn-nuevo {
+    align-self: flex-start;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+  }
+
+  table.mat-elevation-z8 th,
+  table.mat-elevation-z8 td {
+    font-size: 0.8rem;
   }
 }

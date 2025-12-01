@@ -8,20 +8,27 @@ import { CantidadRelaciones } from '../../../models/CantidadRelaciones';
 
 @Component({
   selector: 'app-cantidad-relaciones',
+  standalone: true,
   imports: [CommonModule, MatTableModule, MatCardModule, MatProgressSpinnerModule],
   templateUrl: './cantidad-relaciones.html',
   styleUrl: './cantidad-relaciones.css',
 })
 export class CantidadRelacionesComponent implements OnInit {
-
   // columnas de la tabla
   displayedColumns: string[] = ['nombre', 'tipoRelacion', 'cantidad'];
 
   // datasource para mat-table
-  dataSource: MatTableDataSource<CantidadRelaciones> = new MatTableDataSource();
+  dataSource: MatTableDataSource<CantidadRelaciones> =
+    new MatTableDataSource<CantidadRelaciones>();
 
   cargando = false;
   errorMsg = '';
+
+  // métricas resumen
+  totalRelaciones = 0;
+  totalResponsables = 0;
+  totalFamiliares = 0;
+  totalMedicos = 0;
 
   constructor(private usuarioService: UsuarioService) {}
 
@@ -36,6 +43,26 @@ export class CantidadRelacionesComponent implements OnInit {
     this.usuarioService.cantidadRelaciones().subscribe({
       next: (data) => {
         this.dataSource.data = data;
+
+        // total global
+        this.totalRelaciones = data.reduce(
+          (acc, r) => acc + (r.cantidad ?? 0),
+          0
+        );
+
+        // totales por tipo_relacion
+        this.totalResponsables = data
+          .filter((r) => r.tipoRelacion === 'Responsable')
+          .reduce((acc, r) => acc + (r.cantidad ?? 0), 0);
+
+        this.totalFamiliares = data
+          .filter((r) => r.tipoRelacion === 'Familiar')
+          .reduce((acc, r) => acc + (r.cantidad ?? 0), 0);
+
+        this.totalMedicos = data
+          .filter((r) => r.tipoRelacion === 'Médico')
+          .reduce((acc, r) => acc + (r.cantidad ?? 0), 0);
+
         this.cargando = false;
       },
       error: (err) => {

@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <span style="flex: 1">EVA Frontend</span>
+
+  <button mat-button [matMenuTriggerFor]="menuUsuario">
+    <mat-icon>person</mat-icon>
+    Usuario
+  </button>
+</mat-toolbar>
+
+<mat-menu #menuUsuario="matMenu">
+  <button mat-menu-item routerLink="/usuarios">
+    <mat-icon>list</mat-icon>
+    Listar
+  </button>
+  <button mat-menu-item routerLink="/usuarios/news">
+    <mat-icon>add</mat-icon>
+    Registrar
+  </button>
+</mat-menu>

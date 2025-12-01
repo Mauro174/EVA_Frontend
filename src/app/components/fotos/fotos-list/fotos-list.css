@@ -1,0 +1,48 @@
+.lista-container {
+  padding: 24px;
+}
+
+.header-lista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-lista h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.intro-text {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  font-family: 'Roboto', sans-serif;
+  color: #555555;
+  max-width: 520px;
+}
+
+.btn-nuevo {
+  background-color: #5f7cff !important;
+  color: #ffffff !important;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tabla-fotos {
+  width: 100%;
+}
+
+.url-cell a {
+  font-size: 0.85rem;
+  text-decoration: underline;
+  word-break: break-all;
+}

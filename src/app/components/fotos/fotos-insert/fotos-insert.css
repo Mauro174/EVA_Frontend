@@ -1,0 +1,26 @@
+.form-container {
+  max-width: 600px;
+  margin: 24px auto;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.form-container h1 {
+  margin-bottom: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}

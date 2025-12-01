@@ -10,6 +10,17 @@ import { adminGuard } from './guard/admin-guard';   // ⬅️ NUEVO
 import { Relacionesusuarios } from './components/relacionesusuarios/relacionesusuarios';
 import { RelacionesusuariosInsert } from './components/relacionesusuarios/relacionesusuarios-insert/relacionesusuarios-insert';
 import { CantidadRelacionesComponent } from './components/reportes/cantidad-relaciones/cantidad-relaciones';
+import { Conversaciones } from './components/conversaciones/conversaciones';
+import { ConversacionesInsert } from './components/conversaciones/conversaciones-insert/conversaciones-insert';
+//import { ReporteConversacionesCanal } from './components/conversaciones/reporte-conversaciones-canal/reporte-conversaciones-canal';
+//import { ReporteConversacionesUsuario } from './components/conversaciones/reporte-conversaciones-usuario/reporte-conversaciones-usuario';
+import { Medicamentos } from './components/medicamentos/medicamentos';
+//import { MedicamentosInsert } from './components/medicamentos/medicamentos-insert/medicamentos-insert';
+import { MedicamentoList } from './components/medicamentos/medicamentos-list/medicamentos-list';
+import { ReportesHome } from './components/reportes/reportes-home/reportes-home';
+import { FotosList } from './components/fotos/fotos-list/fotos-list';
+import { FotosInsert } from './components/fotos/fotos-insert/fotos-insert';
+import { Fotos } from './components/fotos/fotos';
 
 export const routes: Routes = [
 
@@ -36,7 +47,41 @@ export const routes: Routes = [
       { path: 'relacionesusuarios/edits/:id', component: RelacionesusuariosInsert, canActivate: [adminGuard] },
 
       // REPORTES (todos los logueados)
-      { path: 'reportes/reporte-relaciones', component: CantidadRelacionesComponent }
+      { path: 'reportes', component: ReportesHome },
+      { path: 'reportes/reporte-relaciones', component: CantidadRelacionesComponent },
+
+      // MEDICAMENTOS
+      {
+        path: 'medicamentos',
+        component: Medicamentos,
+        children: [
+          { path: '', component: MedicamentoList },
+          //{ path: 'news', component: MedicamentoInsert },
+          //{ path: 'edits/:id', component: MedicamentoInsert },
+        ],
+      },
+
+      // CONVERSACIONES
+      {
+        path: 'conversaciones',
+        component: Conversaciones,
+        children: [
+          { path: 'nuevo', component: ConversacionesInsert },      // /conversaciones/nuevo
+          { path: 'edits/:id', component: ConversacionesInsert },  // /conversaciones/edits/1
+        ],
+      },
+
+      //FOTOS
+
+       {
+    path: 'fotos',
+    component: Fotos,
+    children: [
+      { path: 'lista', component: FotosList },
+      { path: 'nuevo', component: FotosInsert },
+      { path: 'ediciones/:id', component: FotosInsert },
+    ],
+  },
     ]
   }
 ];

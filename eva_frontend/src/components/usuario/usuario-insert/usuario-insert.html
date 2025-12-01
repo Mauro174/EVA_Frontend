@@ -1,0 +1,82 @@
+<div class="container">
+  <div style="text-align: center; margin: 5%">
+    <h2>{{ edicion ? 'Editar Usuario' : 'Registrar Usuario' }}</h2>
+  </div>
+
+  <div style="text-align: center; margin: 5%">
+    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+      @if (edicion) {
+      <mat-form-field class="example-full-width">
+        <mat-label>ID:</mat-label>
+        <input matInput formControlName="id" />
+      </mat-form-field>
+      }
+
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre:</mat-label>
+        <input matInput formControlName="nombre" required />
+      </mat-form-field>
+
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Apellido:</mat-label>
+        <input matInput formControlName="apellido" required />
+      </mat-form-field>
+
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Email:</mat-label>
+        <input matInput formControlName="email" required />
+      </mat-form-field>
+
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Password:</mat-label>
+        <input matInput type="password" formControlName="password" required />
+      </mat-form-field>
+
+      <br />
+      <mat-form-field>
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="rol" required>
+          @for (r of roles; track r) {
+          <mat-option [value]="r.value">{{ r.viewValue }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <br />
+      <mat-form-field>
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaNac" [max]="today" required />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Condición médica:</mat-label>
+        <input matInput formControlName="condicion" />
+      </mat-form-field>
+
+      <br />
+      <div class="example-full-width">
+        <label class="mat-label">Movilidad</label>
+        <mat-radio-group formControlName="movilidad" aria-label="Movilidad" required>
+          <mat-radio-button [value]="true">Con movilidad reducida</mat-radio-button>
+          <mat-radio-button [value]="false">Sin movilidad reducida</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <br />
+      <mat-form-field class="example-full-width">
+        <mat-label>Volumen (0-100):</mat-label>
+        <input matInput type="number" formControlName="volumen" />
+      </mat-form-field>
+
+      <br />
+      <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
+    </form>
+  </div>
+</div>
