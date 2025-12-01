@@ -1,7 +1,5 @@
 <div class="eva-login-container">
-
   <div class="eva-login-card">
-
     <img src="assets/eva.png" alt="Logo EVA" class="eva-login-logo" />
 
     <h2 class="eva-login-title">Inicie sesión</h2>
@@ -13,22 +11,31 @@
 
     <mat-form-field appearance="outline" class="eva-login-field">
       <mat-label>Contraseña</mat-label>
-      <input 
-        matInput 
+      <input
+        matInput
         type="password"
         [(ngModel)]="password"
         placeholder="Ingrese su contraseña"
       />
     </mat-form-field>
 
-    <button 
-      mat-raised-button 
+    <button
+      mat-raised-button
       class="eva-login-button"
       (click)="login()"
     >
       Ingresar
     </button>
 
+    <div class="eva-login-signup">
+      <span>¿Eres nuevo en EVA?</span>
+      <button
+        type="button"
+        class="eva-login-signup-link"
+        (click)="irARegistro()"
+      >
+        Crear cuenta
+      </button>
+    </div>
   </div>
-
 </div>

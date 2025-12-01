@@ -21,8 +21,12 @@ import { ReportesHome } from './components/reportes/reportes-home/reportes-home'
 import { FotosList } from './components/fotos/fotos-list/fotos-list';
 import { FotosInsert } from './components/fotos/fotos-insert/fotos-insert';
 import { Fotos } from './components/fotos/fotos';
+import { ReporteFotosMasRecuerdos } from './components/reportes/reporte-fotos-mas-recuerdos/reporte-fotos-mas-recuerdos';
 
 export const routes: Routes = [
+
+    //REGISTRO PÚBLICO (reutiliza el formulario de usuario)
+  { path: 'registro', component: UsuarioInsert },  // SIN guards
 
   // LOGIN
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -49,7 +53,7 @@ export const routes: Routes = [
       // REPORTES (todos los logueados)
       { path: 'reportes', component: ReportesHome },
       { path: 'reportes/reporte-relaciones', component: CantidadRelacionesComponent },
-
+      {path: 'reportes/fotos',component: ReporteFotosMasRecuerdos},
       // MEDICAMENTOS
       {
         path: 'medicamentos',

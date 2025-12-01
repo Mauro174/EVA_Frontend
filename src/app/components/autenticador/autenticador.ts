@@ -20,10 +20,13 @@ export class Autenticador implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
+
   username: string = '';
   password: string = '';
   mensaje: string = '';
+
   ngOnInit(): void {}
+
   login() {
     let request = new JwtRequestDTO();
     request.username = this.username;
@@ -38,5 +41,9 @@ export class Autenticador implements OnInit {
         this.snackBar.open(this.mensaje, 'Aviso', { duration: 2000 });
       }
     );
+  }
+
+  irARegistro() {
+    this.router.navigate(['/registro']);
   }
 }

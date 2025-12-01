@@ -1,0 +1,124 @@
+.reporte-container {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.reporte-card {
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.reporte-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.reporte-title-block h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.reporte-subtitle {
+  color: #555;
+}
+
+.reporte-icon-block {
+  width: 56px;
+  height: 56px;
+  background: #e5ebff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* estados de carga / vacío */
+.reporte-loading,
+.reporte-empty {
+  font-size: 0.95rem;
+  color: #555555;
+  text-align: center;
+  padding: 16px 0;
+}
+
+/* CONTENEDOR DEL GRÁFICO DE BARRAS VERTICALES */
+.reporte-body {
+  margin-top: 8px;
+}
+
+.chart-container {
+  margin-top: 8px;
+  padding: 16px 12px 12px;
+  border-radius: 16px;
+  background: #f4f6ff; /* tono suave EVA */
+}
+
+/* Área donde viven las barras */
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 16px;
+  height: 220px; /* alto total del gráfico */
+}
+
+/* Cada “columna” del gráfico: valor, barra y etiqueta */
+.chart-bar-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 80px;
+}
+
+/* Número encima de la barra */
+.chart-bar-value {
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  color: #555555;
+}
+
+/* Contenedor gris-lila de fondo */
+.chart-bar-outer {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  background: #e5ebff;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Barra de color que crece hacia arriba */
+.chart-bar-inner {
+  width: 60%;
+  border-radius: 8px 8px 0 0;
+  background: linear-gradient(180deg, #5f7cff, #9b7cff);
+  transition: height 0.4s ease;
+}
+
+/* Nombre del usuario debajo de la barra */
+.chart-bar-label {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  text-align: center;
+  color: #333333;
+  word-wrap: break-word;
+}
+
+/* Responsive: si hay muchos usuarios, que no se vea tan apretado en móvil */
+@media (max-width: 600px) {
+  .chart-bars {
+    gap: 10px;
+  }
+  .chart-bar-block {
+    max-width: 60px;
+  }
+  .chart-bar-label {
+    font-size: 0.7rem;
+  }
+}

@@ -13,9 +13,8 @@
         (click)="irA(card.route)"
       >
         <div class="report-icon">
-          <!-- Puedes cambiar por iconos reales si quieres -->
           <span *ngIf="card.variant === 'primary'">📋</span>
-          <span *ngIf="card.variant !== 'primary'">📁</span>
+          <span *ngIf="card.variant !== 'primary'">📊</span>
         </div>
 
         <h3 class="report-title">{{ card.title }}</h3>

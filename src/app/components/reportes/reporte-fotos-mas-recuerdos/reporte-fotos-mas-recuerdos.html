@@ -1,0 +1,53 @@
+<div class="reporte-container">
+  <mat-card class="reporte-card">
+    <div class="reporte-header">
+      <div class="reporte-title-block">
+        <h1>Usuarios con más recuerdos</h1>
+        <p class="reporte-subtitle">
+          Fotos registradas por cada usuario.
+        </p>
+      </div>
+
+      <div class="reporte-icon-block">
+        <mat-icon aria-hidden="true">photo_library</mat-icon>
+      </div>
+    </div>
+
+    <div *ngIf="cargando" class="reporte-loading">
+      Cargando reporte...
+    </div>
+
+    <div *ngIf="!cargando && datos.length === 0" class="reporte-empty">
+      Aún no hay recuerdos registrados.
+    </div>
+
+    <div *ngIf="!cargando && datos.length > 0" class="reporte-body">
+      <div class="chart-container">
+        <div class="chart-bars">
+          <div
+            class="chart-bar-block"
+            *ngFor="let item of datos; let i = index"
+          >
+            <!-- valor encima de la barra -->
+            <div class="chart-bar-value">
+              {{ item.cantidad }}
+            </div>
+
+            <!-- barra vertical -->
+            <div class="chart-bar-outer">
+              <div
+                class="chart-bar-inner"
+                [style.height]="getBarHeight(item)"
+              ></div>
+            </div>
+
+            <!-- nombre del usuario -->
+            <div class="chart-bar-label">
+              {{ item.usuario }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

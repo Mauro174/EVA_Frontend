@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Fotos } from '../models/Fotos';
 import { environment } from '../../environments/environment';
+import { CantidadFotos } from '../models/CantidadFotos';
 
 @Injectable({
   providedIn: 'root',
@@ -47,4 +48,8 @@ export class FotosService {
   setLista(listaNueva: Fotos[]) {
     this.listaCambio.next(listaNueva);
   }
+
+  reporteUsuarioConMasFotos() {
+  return this.http.get<CantidadFotos[]>(`${this.url}/mayorfotos`);
+}
 }

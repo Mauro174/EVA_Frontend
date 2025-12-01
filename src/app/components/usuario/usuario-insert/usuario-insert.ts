@@ -31,7 +31,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatSelectModule,
     MatRadioModule,
     MatNativeDateModule,
-    MatButtonModule  ],
+    MatButtonModule,
+  ],
   templateUrl: './usuario-insert.html',
   styleUrl: './usuario-insert.css',
 })
@@ -42,22 +43,43 @@ export class UsuarioInsert implements OnInit {
   id = 0;
   today = new Date();
 
-  roles = [
+  // 🔹 modo registro público (cuando viene de /registro)
+  esRegistroPublico: boolean = false;
+
+  // opciones de rol para admin
+  private rolesAdmin = [
     { value: 'ADMIN', viewValue: 'ADMIN' },
     { value: 'PACIENTE', viewValue: 'PACIENTE' },
     { value: 'MEDICO', viewValue: 'MÉDICO' },
+    { value: 'RESPONSABLE', viewValue: 'RESPONSABLE' },
+    
   ];
+
+  // opciones de rol para registro público
+  private rolesRegistro = [
+    { value: 'PACIENTE', viewValue: 'PACIENTE' },
+    { value: 'FAMILIAR', viewValue: 'FAMILIAR' },
+    { value: 'RESPONSABLE', viewValue: 'RESPONSABLE' },
+  ];
+
+  // arreglo que realmente usa el HTML
+  roles = this.rolesAdmin;
 
   constructor(
     private uS: UsuarioService,
     private router: Router,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-  private snackBar: MatSnackBar ,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    // 1) Primero creo el formulario
+    // detectar si la ruta es /registro
+    this.esRegistroPublico = this.router.url.startsWith('/registro');
+
+    // según el modo, escogemos las opciones de rol
+    this.roles = this.esRegistroPublico ? this.rolesRegistro : this.rolesAdmin;
+
     this.form = this.formBuilder.group({
       id: [''],
 
@@ -95,7 +117,6 @@ export class UsuarioInsert implements OnInit {
       ],
     });
 
-    // 2) Luego leo el parámetro y si es edición, cargo la data
     this.route.params.subscribe((data: Params) => {
       this.id = data['id'];
       this.edicion = data['id'] != null;
@@ -105,79 +126,95 @@ export class UsuarioInsert implements OnInit {
     });
   }
 
+  // título dinámico para el formulario
+  get tituloForm(): string {
+    if (this.edicion) return 'Editar usuario';
+    if (this.esRegistroPublico) return 'Crea tu cuenta EVA';
+    return 'Registrar usuario';
+  }
+
   aceptar(): void {
-  if (this.form.invalid) {
-    this.form.markAllAsTouched();
-    return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    if (this.edicion) {
+      const dto = {
+        idUsuario: this.form.value.id,
+        rolUsuario: this.form.value.rol,
+        emailUsuario: this.form.value.email,
+        passwordUsuario: this.form.value.password,
+        nombreUsuario: this.form.value.nombre,
+        apellidoUsuario: this.form.value.apellido,
+        feNacimientoUsuario: this.form.value.fechaNac,
+        condicionmedicaUsuario: this.form.value.condicion,
+        movilidadUsuario: this.form.value.movilidad,
+        personalizadoUsuario: this.form.value.personalizadoUsuario,
+        volumenUsuario: this.form.value.volumen,
+        enabled: true,
+      };
+
+      this.uS.update(dto).subscribe(() => {
+        this.uS.list().subscribe((data) => {
+          this.uS.setList(data);
+
+          this.snackBar.open('✔ Usuario actualizado exitosamente', 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['eva-snackbar-success'],
+          });
+
+          this.router.navigate(['/usuarios']);
+        });
+      });
+    } else {
+      // INSERT (admin o registro público)
+      this.usu.idUsuario = this.form.value.id;
+      this.usu.nombreUsuario = this.form.value.nombre;
+      this.usu.apellidoUsuario = this.form.value.apellido;
+      this.usu.emailUsuario = this.form.value.email;
+      this.usu.passwordUsuario = this.form.value.password;
+      this.usu.feNacimientoUsuario = this.form.value.fechaNac;
+      this.usu.condicionmedicaUsuario = this.form.value.condicion;
+      this.usu.movilidadUsuario = this.form.value.movilidad;
+      this.usu.volumenUsuario = this.form.value.volumen;
+      this.usu.enabled = true;
+      this.usu.personalizadoUsuario = this.form.value.personalizadoUsuario;
+
+      const rolSeleccionado = this.form.value.rol;
+      this.usu.roles = [{ rol: rolSeleccionado } as Rol];
+
+      this.uS.insert(this.usu).subscribe(() => {
+        if (this.esRegistroPublico) {
+          // 🔹 caso registro desde login
+          this.snackBar.open('✔ Cuenta creada. Ahora puedes iniciar sesión.', 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['eva-snackbar-success'],
+          });
+
+          this.router.navigate(['/login']);
+        } else {
+          // 🔹 caso admin dentro de EVA
+          this.uS.list().subscribe((data) => {
+            this.uS.setList(data);
+
+            this.snackBar.open('✔ Usuario registrado correctamente', 'Cerrar', {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              panelClass: ['eva-snackbar-success'],
+            });
+
+            this.router.navigate(['/usuarios']);
+          });
+        }
+      });
+    }
   }
-
-  if (this.edicion) {
-    // 🔹 construir el DTO que el backend esperaa
-    const dto = {
-      idUsuario: this.form.value.id,
-      rolUsuario: this.form.value.rol, // 👈 STRING
-      emailUsuario: this.form.value.email,
-      passwordUsuario: this.form.value.password,
-      nombreUsuario: this.form.value.nombre,
-      apellidoUsuario: this.form.value.apellido,
-      feNacimientoUsuario: this.form.value.fechaNac,
-      condicionmedicaUsuario: this.form.value.condicion,
-      movilidadUsuario: this.form.value.movilidad,
-      personalizadoUsuario: this.form.value.personalizadoUsuario,
-      volumenUsuario: this.form.value.volumen,
-      enabled: true
-    };
-
-    this.uS.update(dto).subscribe(() => {
-      this.uS.list().subscribe((data) => {
-        this.uS.setList(data);
-
-this.snackBar.open('✔ Usuario actualizado exitosamente', 'Cerrar', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top',
-        panelClass: ['eva-snackbar-success']
-      });
-
-
-        this.router.navigate(['/usuarios']);
-      });
-    });
-  } else {
-    // para insertar puedes seguir usando this.usu como lo tenías
-    this.usu.idUsuario = this.form.value.id;
-    this.usu.nombreUsuario = this.form.value.nombre;
-    this.usu.apellidoUsuario = this.form.value.apellido;
-    this.usu.emailUsuario = this.form.value.email;
-    this.usu.passwordUsuario = this.form.value.password;
-    this.usu.feNacimientoUsuario = this.form.value.fechaNac;
-    this.usu.condicionmedicaUsuario = this.form.value.condicion;
-    this.usu.movilidadUsuario = this.form.value.movilidad;
-    this.usu.volumenUsuario = this.form.value.volumen;
-    this.usu.enabled = true;
-    this.usu.personalizadoUsuario = this.form.value.personalizadoUsuario;
-
-    const rolSeleccionado = this.form.value.rol;
-    this.usu.roles = [{ rol: rolSeleccionado } as Rol];
-
-    this.uS.insert(this.usu).subscribe(() => {
-      this.uS.list().subscribe((data) => {
-        this.uS.setList(data);
-
-
-this.snackBar.open('✔ Usuario registrado correctamente', 'Cerrar', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top',
-        panelClass: ['eva-snackbar-success']
-      });
-
-        this.router.navigate(['/usuarios']);
-      });
-    });
-  }
-}
-
 
   private init(): void {
     this.uS.listId(this.id).subscribe((data) => {
@@ -192,7 +229,6 @@ this.snackBar.open('✔ Usuario registrado correctamente', 'Cerrar', {
         email: data.emailUsuario,
         password: data.passwordUsuario,
         rol: data.rolUsuario,
- // 👈 aquí va el string del rol
         fechaNac: fNac,
         condicion: data.condicionmedicaUsuario,
         movilidad: data.movilidadUsuario,
