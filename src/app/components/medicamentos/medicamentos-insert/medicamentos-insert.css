@@ -1,0 +1,68 @@
+/* Página */
+.usuario-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* Contenedor estilo tarjeta */
+.usuario-card {
+  width: 420px;
+  background: white;
+  padding: 32px 28px;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(75, 58, 255, 0.15);
+}
+
+/* Título */
+.form-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 20px;
+  color: #2f3154;
+  font-weight: 600;
+}
+
+/* Formulario vertical */
+.usuario-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Mat-form-fields */
+.form-field {
+  width: 100%;
+}
+
+.usuario-card .mat-mdc-text-field-wrapper {
+  background-color: #f5f6ff;
+  border-radius: 12px;
+}
+
+/* Radios */
+.radio-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 14px;
+  color: #444;
+}
+
+.radio-group {
+  display: flex;
+  gap: 18px;
+}
+
+/* Botón */
+.primary-btn {
+  margin-top: 10px;
+  padding: 10px 0;
+  width: 100%;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+}
