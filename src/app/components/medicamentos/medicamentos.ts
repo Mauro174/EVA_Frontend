@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-medicamentos',
-  imports: [],
+  standalone: true,
+  imports: [RouterOutlet],
   templateUrl: './medicamentos.html',
   styleUrl: './medicamentos.css',
 })
-export class Medicamentos {
-
-}
+export class Medicamentos {}
