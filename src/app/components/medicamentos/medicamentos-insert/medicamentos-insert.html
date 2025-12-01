@@ -1,0 +1,120 @@
+<div class="usuario-page">
+  <div class="usuario-card">
+    <h2 class="form-title">
+      {{ edicion ? 'Editar medicamento' : 'Registrar medicamento' }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="aceptar()" class="usuario-form">
+      <!-- ID solo en edición -->
+      @if (edicion) {
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>ID medicamento</mat-label>
+          <input matInput formControlName="id" readonly />
+        </mat-form-field>
+      }
+
+      <!-- Usuario (paciente) -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Usuario (paciente)*</mat-label>
+        <mat-select
+          formControlName="usuario"
+          [compareWith]="compareUsuarios"
+        >
+          @for (u of usuariosPacientes; track u) {
+            <mat-option [value]="u">
+              {{ u.idUsuario }} - {{ u.nombreUsuario }}
+              {{ u.apellidoUsuario }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          @if (form.get('usuario')?.hasError('required')) {
+            Debes seleccionar un usuario.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Nombre del medicamento -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nombre del medicamento*</mat-label>
+        <input matInput formControlName="nombre" />
+        <mat-error>
+          @if (form.get('nombre')?.hasError('required')) {
+            El nombre es obligatorio.
+          } @else if (form.get('nombre')?.hasError('maxlength')) {
+            Máximo 120 caracteres.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Dosis -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Dosis*</mat-label>
+        <input
+          matInput
+          formControlName="dosis"
+          placeholder="Ej. 1 tableta cada 8 horas"
+        />
+        <mat-error>
+          @if (form.get('dosis')?.hasError('required')) {
+            La dosis es obligatoria.
+          } @else if (form.get('dosis')?.hasError('maxlength')) {
+            Máximo 120 caracteres.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Vía de administración -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Vía de administración*</mat-label>
+        <input
+          matInput
+          formControlName="via"
+          placeholder="Oral, Intravenosa, Tópica, etc."
+        />
+        <mat-error>
+          @if (form.get('via')?.hasError('required')) {
+            La vía de administración es obligatoria.
+          } @else if (form.get('via')?.hasError('maxlength')) {
+            Máximo 80 caracteres.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Notas -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Notas</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          formControlName="notas"
+          placeholder="Indicaciones especiales, horarios, advertencias..."
+        ></textarea>
+        <mat-error>
+          @if (form.get('notas')?.hasError('maxlength')) {
+            Máximo 250 caracteres.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Estado -->
+      <div class="radio-field">
+        <span class="field-label">Estado*</span>
+        <mat-radio-group formControlName="activo" class="radio-group">
+          <mat-radio-button [value]="true">Activo</mat-radio-button>
+          <mat-radio-button [value]="false">Inactivo</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <!-- Botón -->
+      <button
+        mat-raised-button
+        color="primary"
+        class="primary-btn"
+        type="submit"
+      >
+        {{ edicion ? 'Guardar cambios' : 'Registrar medicamento' }}
+      </button>
+    </form>
+  </div>
+</div>
