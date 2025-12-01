@@ -1,3 +1,4 @@
+// routes.ts
 import { Routes } from '@angular/router';
 import { Autenticador } from './components/autenticador/autenticador';
 import { Dashboard } from './components/dashboard/dashboard';
@@ -7,17 +8,21 @@ import { Usuario } from './components/usuario/usuario';
 import { UsuarioInsert } from './components/usuario/usuario-insert/usuario-insert';
 
 import { seguridadGuard } from './guard/seguridad-guard';
-
+import { adminGuard } from './guard/admin-guard';   
 import { Relacionesusuarios } from './components/relacionesusuarios/relacionesusuarios';
 import { RelacionesusuariosInsert } from './components/relacionesusuarios/relacionesusuarios-insert/relacionesusuarios-insert';
-
+import { CantidadRelacionesComponent } from './components/reportes/cantidad-relaciones/cantidad-relaciones';
 import { Conversaciones } from './components/conversaciones/conversaciones';
 import { ConversacionesInsert } from './components/conversaciones/conversaciones-insert/conversaciones-insert';
-import { ConversacionesList } from './components/conversaciones/conversaciones-list/conversaciones-list';
-
+//import { ReporteConversacionesCanal } from './components/conversaciones/reporte-conversaciones-canal/reporte-conversaciones-canal';
+//import { ReporteConversacionesUsuario } from './components/conversaciones/reporte-conversaciones-usuario/reporte-conversaciones-usuario';
 import { Medicamentos } from './components/medicamentos/medicamentos';
+//import { MedicamentosInsert } from './components/medicamentos/medicamentos-insert/medicamentos-insert';
 import { MedicamentoList } from './components/medicamentos/medicamentos-list/medicamentos-list';
-import { MedicamentoInsert } from './components/medicamentos/medicamentos-insert/medicamentos-insert';
+import { ReportesHome } from './components/reportes/reportes-home/reportes-home';
+import { FotosList } from './components/fotos/fotos-list/fotos-list';
+import { FotosInsert } from './components/fotos/fotos-insert/fotos-insert';
+import { Fotos } from './components/fotos/fotos';
 
 export const routes: Routes = [
   
@@ -30,25 +35,23 @@ export const routes: Routes = [
   {
     path: '',
     component: Dashboard,
-    canActivate: [seguridadGuard],
+    canActivate: [seguridadGuard],   
     children: [
       { path: 'homes', component: Landing },
 
-      // USUARIOS
-      { path: 'usuarios', component: Usuario },
-      { path: 'usuarios/nuevo', component: UsuarioInsert },
-      { path: 'usuarios/edits/:id', component: UsuarioInsert },
+      // USUARIOS (solo ADMIN)
+      { path: 'usuarios', component: Usuario, canActivate: [adminGuard] },
+      { path: 'usuarios/nuevo', component: UsuarioInsert, canActivate: [adminGuard] },
+      { path: 'usuarios/edits/:id', component: UsuarioInsert, canActivate: [adminGuard] },
 
-      // RELACIONES USUARIOS
-      { path: 'relacionesusuarios', component: Relacionesusuarios },
-      {
-        path: 'relacionesusuarios/nuevo',
-        component: RelacionesusuariosInsert,
-      },
-      {
-        path: 'relacionesusuarios/edits/:id',
-        component: RelacionesusuariosInsert,
-      },
+      // RELACIONES (solo ADMIN)
+      { path: 'relacionesusuarios', component: Relacionesusuarios, canActivate: [adminGuard] },
+      { path: 'relacionesusuarios/nuevo', component: RelacionesusuariosInsert, canActivate: [adminGuard] },
+      { path: 'relacionesusuarios/edits/:id', component: RelacionesusuariosInsert, canActivate: [adminGuard] },
+
+      // REPORTES (todos los logueados)
+      { path: 'reportes', component: ReportesHome },
+      { path: 'reportes/reporte-relaciones', component: CantidadRelacionesComponent },
 
       // MEDICAMENTOS
       {
@@ -57,10 +60,8 @@ export const routes: Routes = [
         children: [
           // lista por defecto: /medicamentos
           { path: '', component: MedicamentoList },
-          // nuevo: /medicamentos/nuevo
-          { path: 'nuevo', component: MedicamentoInsert },
-          // editar: /medicamentos/edits/ID
-          { path: 'edits/:id', component: MedicamentoInsert },
+          //{ path: 'news', component: MedicamentoInsert },
+          //{ path: 'edits/:id', component: MedicamentoInsert },
         ],
       },
 
@@ -77,6 +78,18 @@ export const routes: Routes = [
           { path: 'edits/:id', component: ConversacionesInsert },
         ],
       },
+
+      //FOTOS
+
+       {
+    path: 'fotos',
+    component: Fotos,
+    children: [
+      { path: 'lista', component: FotosList },
+      { path: 'nuevo', component: FotosInsert },
+      { path: 'ediciones/:id', component: FotosInsert },
     ],
   },
+    ]
+  }
 ];
