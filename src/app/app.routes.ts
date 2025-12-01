@@ -3,10 +3,12 @@ import { Routes } from '@angular/router';
 import { Autenticador } from './components/autenticador/autenticador';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Landing } from './components/landing/landing';
+
 import { Usuario } from './components/usuario/usuario';
 import { UsuarioInsert } from './components/usuario/usuario-insert/usuario-insert';
+
 import { seguridadGuard } from './guard/seguridad-guard';
-import { adminGuard } from './guard/admin-guard';   // ⬅️ NUEVO
+import { adminGuard } from './guard/admin-guard';   
 import { Relacionesusuarios } from './components/relacionesusuarios/relacionesusuarios';
 import { RelacionesusuariosInsert } from './components/relacionesusuarios/relacionesusuarios-insert/relacionesusuarios-insert';
 import { CantidadRelacionesComponent } from './components/reportes/cantidad-relaciones/cantidad-relaciones';
@@ -23,16 +25,17 @@ import { FotosInsert } from './components/fotos/fotos-insert/fotos-insert';
 import { Fotos } from './components/fotos/fotos';
 
 export const routes: Routes = [
+  
+  { path: '', redirectTo: 'homes', pathMatch: 'full' },
 
-  // LOGIN
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
   { path: 'login', component: Autenticador },
 
-  // TODAS LAS RUTAS INTERNAS VAN DENTRO DEL DASHBOARD
+  
   {
     path: '',
     component: Dashboard,
-    canActivate: [seguridadGuard],   // ⬅️ solo verifica LOGIN
+    canActivate: [seguridadGuard],   
     children: [
       { path: 'homes', component: Landing },
 
@@ -55,6 +58,7 @@ export const routes: Routes = [
         path: 'medicamentos',
         component: Medicamentos,
         children: [
+          // lista por defecto: /medicamentos
           { path: '', component: MedicamentoList },
           //{ path: 'news', component: MedicamentoInsert },
           //{ path: 'edits/:id', component: MedicamentoInsert },
@@ -66,8 +70,12 @@ export const routes: Routes = [
         path: 'conversaciones',
         component: Conversaciones,
         children: [
-          { path: 'nuevo', component: ConversacionesInsert },      // /conversaciones/nuevo
-          { path: 'edits/:id', component: ConversacionesInsert },  // /conversaciones/edits/1
+          // lista por defecto: /conversaciones
+          { path: '', component: ConversacionesList },
+          // nuevo: /conversaciones/nuevo
+          { path: 'nuevo', component: ConversacionesInsert },
+          // editar: /conversaciones/edits/ID
+          { path: 'edits/:id', component: ConversacionesInsert },
         ],
       },
 

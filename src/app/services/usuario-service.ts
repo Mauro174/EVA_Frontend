@@ -3,7 +3,6 @@ import { Usuario } from '../models/Usuario';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
-import { CantidadRelaciones } from '../models/CantidadRelaciones';
 const base_url = environment.base;
 
 @Injectable({
@@ -38,7 +37,7 @@ private listaCambio = new Subject<Usuario[]>();
   }
   update(usuario: any) {
   return this.http.put(`${this.url}`, usuario, {
-    responseType: 'text' as 'json'   // truquito para que compile
+    responseType: 'text' as 'json'   // 👈 truquito para que compile
   }); 
 }
 
@@ -46,9 +45,6 @@ delete(id: number) {
     return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
   }
 
-  cantidadRelaciones() {
-    return this.http.get<CantidadRelaciones[]>(`${this.url}/cantidadRelaciones`);
-  }
   
 }
 
