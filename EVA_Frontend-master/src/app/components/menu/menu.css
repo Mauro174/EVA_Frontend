@@ -1,0 +1,167 @@
+/* === HEADER BASE === */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 40px;
+}
+
+/* === MENÚ PRINCIPAL === */
+.navigation .main-menu {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Items principales */
+.navigation .main-menu > li > a,
+.navigation .submenu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111827;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navigation .main-menu > li > a:hover,
+.navigation .submenu-trigger:hover {
+  color: #6a5ac9;
+}
+
+/* === SUBMENÚ USUARIOS === */
+
+/* Mantiene el item "Usuarios" alineado */
+.navigation .submenu {
+  position: relative;
+}
+
+/* Zona invisible para que el submenú NO se cierre rápido */
+.navigation .submenu::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 18px; /* zona segura */
+}
+
+/* Caja del submenú */
+.navigation .submenu-items {
+  position: absolute;
+
+  /* ⭐ Alineado exactamente debajo de “Usuarios” */
+  top: calc(100% + 8px);
+  left: 0;
+  right: auto;
+
+  background: #fff;
+  padding: 6px 0;
+  border-radius: 12px;
+  min-width: 210px;
+
+  border: 1px solid rgba(106, 90, 201, 0.22);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.15);
+
+  list-style: none;
+  margin: 0;
+
+  /* Anula heredados */
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 1000;
+}
+
+/* Mostrar submenú en hover */
+.navigation .submenu:hover .submenu-items {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Ítems internos */
+.navigation .submenu-items li {
+  margin: 0;
+  width: 100%;
+}
+
+.navigation .submenu-items li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #111827;
+  text-decoration: none;
+}
+
+.navigation .submenu-items li a:hover {
+  background: rgba(106, 90, 201, 0.08);
+  color: #6a5ac9;
+}
+
+/* Tamaño de íconos */
+.navigation .submenu-items .material-icons,
+.navigation .submenu-trigger .material-icons {
+  font-size: 20px;
+}
+
+/* === MENÚ HAMBURGUESA === */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6a5ac9;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navigation {
+    display: none;
+    width: 100%;
+  }
+
+  .navigation.active {
+    display: block;
+  }
+
+  .navigation .main-menu {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .navigation .main-menu > li {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .navigation .main-menu > li > a,
+  .submenu-trigger {
+    padding: 14px 20px;
+    font-size: 1.2rem;
+    display: flex;
+    width: 100%;
+  }
+
+  .submenu-items {
+    position: static;
+    opacity: 1 !important;
+    pointer-events: auto;
+    box-shadow: none;
+    border: none;
+  }
+}

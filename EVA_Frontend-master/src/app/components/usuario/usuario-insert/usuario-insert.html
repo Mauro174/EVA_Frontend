@@ -1,0 +1,162 @@
+<div class="usuario-page">
+  <div class="usuario-card">
+    <h2 class="form-title">
+      {{ edicion ? 'Editar usuario' : 'Registrar usuario' }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="aceptar()" class="usuario-form">
+
+      <!-- ID solo en edición -->
+      @if (edicion) {
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>ID</mat-label>
+          <input matInput formControlName="id" readonly />
+        </mat-form-field>
+      }
+
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nombre*</mat-label>
+        <input matInput formControlName="nombre" />
+        <mat-error>
+          @if (form.get('nombre')?.hasError('required')) {
+            El nombre es obligatorio.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Apellido -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Apellido*</mat-label>
+        <input matInput formControlName="apellido" />
+        <mat-error>
+          @if (form.get('apellido')?.hasError('required')) {
+            El apellido es obligatorio.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Email*</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-error>
+          @if (form.get('email')?.hasError('required')) {
+            El email es obligatorio.
+          } @else if (form.get('email')?.hasError('email')) {
+            Ingresa un email válido.
+          } @else if (form.get('email')?.hasError('pattern')) {
+            Ingresa un email válido.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Contraseña -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Contraseña*</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-error>
+          @if (form.get('password')?.hasError('required')) {
+            La contraseña es obligatoria.
+          } @else if (form.get('password')?.hasError('minlength')) {
+            Mínimo 6 caracteres.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Rol -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Rol*</mat-label>
+        <mat-select formControlName="rol">
+          @for (r of roles; track r) {
+            <mat-option [value]="r.value">{{ r.viewValue }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          @if (form.get('rol')?.hasError('required')) {
+            El rol es obligatorio.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Fecha de nacimiento -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Fecha de nacimiento*</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="fechaNac"
+          [max]="today"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+          @if (form.get('fechaNac')?.hasError('required')) {
+            La fecha de nacimiento es obligatoria.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Condición médica -->
+      <mat-form-field appearance="outline" class="form-field">
+  <mat-label>Condición médica (opcional)</mat-label>
+  <textarea
+    matInput
+    formControlName="condicion"
+    rows="3"
+  ></textarea>
+</mat-form-field>
+
+
+      <!-- Movilidad -->
+      <div class="radio-field">
+        <label class="field-label">¿Tiene movilidad?</label>
+        <mat-radio-group formControlName="movilidad" class="radio-group">
+          <mat-radio-button [value]="true">Con movilidad</mat-radio-button>
+          <mat-radio-button [value]="false">Sin movilidad</mat-radio-button>
+        </mat-radio-group>
+        <mat-error>
+          @if (form.get('movilidad')?.hasError('required')) {
+            Selecciona una opción.
+          }
+        </mat-error>
+      </div>
+      <!-- eva -->
+
+      <mat-form-field appearance="outline" class="form-field">
+  <mat-label>Nombre para EVA*</mat-label>
+  <input matInput formControlName="personalizadoUsuario" placeholder="Ej. Lunita, Sol, EVA..." />
+
+  <mat-error>
+    @if (form.get('personalizadoUsuario')?.hasError('required')) {
+      Este campo es obligatorio.
+    } @else if (form.get('personalizadoUsuario')?.hasError('maxlength')) {
+      Máximo 100 caracteres.
+    }
+    @else if (form.get('personalizadoUsuario')?.hasError('maxlength')) {
+      Mínimo 5 caracteres.
+    }
+  </mat-error>
+</mat-form-field>
+      <!-- Volumen -->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Volumen (0 a 100)*</mat-label>
+        <input matInput type="number" formControlName="volumen" min="0" max="100" />
+        <mat-error>
+          @if (form.get('volumen')?.hasError('required')) {
+            El volumen es obligatorio.
+          } @else if (form.get('volumen')?.hasError('min')) {
+              El valor mínimo es 0.
+            } @else if (form.get('volumen')?.hasError('max')) {
+              El valor máximo es 100.
+            }
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Botón -->
+      <button mat-raised-button color="primary" class="primary-btn" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+    </form>
+  </div>
+</div>

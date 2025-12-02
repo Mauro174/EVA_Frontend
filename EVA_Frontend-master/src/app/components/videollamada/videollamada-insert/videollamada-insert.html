@@ -1,0 +1,95 @@
+<div class="container">
+  <div style="text-align: center; margin: 3%">
+    <h2>{{ edicion ? 'Editar Licencia' : 'Registrar Licencia' }}</h2>
+  </div>
+  <div style="text-align: center; ">
+    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+      @if (edicion) {
+      <mat-form-field>
+        <mat-label>Código</mat-label>
+        <input matInput formControlName="id" required />
+
+        @if (form.get('id')?.hasError('required')) {
+        <mat-error>El campo id es obligatorio.</mat-error>
+        }
+      </mat-form-field>
+      }
+      <br />
+      <mat-form-field>
+        <mat-label>Videollamada</mat-label>
+        <input matInput formControlName="videollamada" required />
+
+        @if (form.get('videollamada')?.hasError('required')) {
+        <mat-error>El campo videollamada es obligatorio.</mat-error>
+        }
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Precio</mat-label>
+        <input matInput formControlName="precio" required />
+
+        @if (form.get('precio')?.hasError('required')) {
+        <mat-error>El campo precio es obligatorio.</mat-error>
+        }
+      </mat-form-field>
+
+      <br />
+      <div class="custom-field">
+        <label>Estado</label>
+        <mat-radio-group formControlName="estado" aria-label="Estado" required>
+          <mat-radio-button [value]="true">Activo</mat-radio-button>
+          <mat-radio-button [value]="false">Inactivo</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <br />
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Tipo:</mat-label>
+          <mat-select formControlName="tipo" required>
+            @for (p of tipos; track p.value) {
+            <mat-option [value]="p.value">
+              {{ p.viewValue }}
+            </mat-option>
+            }
+          </mat-select>
+
+          @if (form.get('type')?.hasError('required')) {
+          <mat-error>El campo tipo es obligatorio.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <br />
+      <mat-form-field>
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" [max]="today" required />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+        @if (form.get('fecha')?.hasError('required')) {
+        <mat-error>El campo fecha es obligatorio.</mat-error>
+        }
+      </mat-form-field>
+      <br />
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>FamiliaUsuario:</mat-label>
+          <mat-select formControlName="familiausuario" required>
+            @for (p of listaFamiliaUsuarios; track p.idFamiliaUsuario) {
+            <mat-option [value]="p.idFamiliaUsuario">
+              {{ p.nameFamiliaUsuario }}
+            </mat-option>
+            }
+          </mat-select>
+
+          @if (form.get('familiausuario')?.hasError('required')) {
+          <mat-error>El campo familiausuario es obligatorio.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <br>
+       
+      <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
+    </form>
+  </div>
+</div>

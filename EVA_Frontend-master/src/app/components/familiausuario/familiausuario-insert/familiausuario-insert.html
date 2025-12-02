@@ -1,0 +1,79 @@
+<div class="container">
+  <div style="text-align: center; margin: 5%"><h2>{{ edicion ? 'Editar' : 'Registrar' }}</h2></div>
+  <div style="text-align: center; margin: 5%">
+    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+       @if (edicion) {
+       <mat-form-field class="example-full-width">
+        <mat-label>ID:</mat-label>
+        <input
+          matInput
+          formControlName="id"
+        />
+       <mat-error>
+            @if (form.get('id')?.hasError('required')) {
+                Ingrese ID!!
+            }
+        </mat-error>
+      </mat-form-field>
+    }
+      <br>
+      <mat-form-field class="example-full-width" >
+        <mat-label>Familia Usuario:</mat-label>
+        <input
+          matInput
+          formControlName="familiausuario"
+          required
+        />
+       <mat-error>
+            @if (form.get('familiausuario')?.hasError('required')) {
+                Ingrese familiausuario!!
+            }
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Familia:</mat-label>
+        <input matInput placeholder="192" formControlName="version" required/>
+        <mat-error>
+            @if (form.get('familia')?.hasError('required')) {
+                Ingrese familia!!
+            }
+        </mat-error>
+      </mat-form-field>
+       <br />
+      <br />
+    <mat-form-field>
+        <mat-label>Miembros Activos</mat-label>
+            <mat-select formControlName="ma" required>
+                @for (t of tipos; track t) {
+                <mat-option [value]="t.value">{{t.viewValue}}</mat-option>
+                }
+            </mat-select>
+        <mat-error>
+            @if (form.get('ma')?.hasError('required')) {
+            Los miembros activos son obligatorios.
+            }
+        </mat-error>
+    </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" [max]="today" required/>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+            @if (form.get('fecha')?.hasError('required')) {
+            La fecha es obligatoria.
+            }
+        </mat-error>
+      </mat-form-field>     
+
+      <br />
+      <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
+    </form>
+  </div>
+</div>

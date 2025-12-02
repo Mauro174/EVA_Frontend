@@ -1,0 +1,53 @@
+@if (verificar()) {
+<header>
+  <div class="header-content">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <a routerLink="/" class="logo-link">
+        <img src="assets/eva.png" alt="logo EVA" />
+        <span class="logo-text">EVA</span>
+      </a>
+    </div>
+
+    <!-- BOTÓN HAMBURGUESA (MÓVIL) -->
+    <button
+      class="menu-toggle"
+      aria-label="Menú"
+      [attr.aria-expanded]="menuOpen"
+      (click)="toggleMenu()"
+    >
+      ☰
+    </button>
+
+    <!-- NAV -->
+    <nav class="navigation" [class.active]="menuOpen">
+      <ul class="main-menu">
+        
+        <!-- MENÚ USUARIO (SIEMPRE) -->
+        <li class="submenu">
+          <a class="submenu-trigger">
+            <span class="material-icons">person</span>
+            <span class="texto-completo">Usuario</span>
+          </a>
+          <ul class="submenu-items">
+            <li>
+              <a routerLink="/login" (click)="cerrar()">
+                <span class="material-icons">logout</span>
+                Cerrar sesión
+              </a>
+            </li>
+            <li>
+              <a>
+                Rol: <strong>{{ role }}</strong>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+
+  </div>
+</header>
+}
